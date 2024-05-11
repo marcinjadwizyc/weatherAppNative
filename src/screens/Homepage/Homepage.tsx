@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Text, View } from "react-native";
 
 import { Button, Container } from "../../components";
@@ -8,20 +8,14 @@ import { useNavigation } from "@react-navigation/native";
 import { Screens } from "../../utils/navigation";
 import { ApiResponse } from "../../utils/types";
 import { SearchInput } from "../../components/SearchInput/SearchInput";
+import { useAppContext } from "../../context";
 
 export const Homepage = () => {
-  const [favoriteLocation, setFavoriteLocation] = useState("");
-  const [currentLocation, setCurrentLocation] = useState(favoriteLocation);
-  const [locationData, setLocationData] = useState<ApiResponse>();
-
+  const { currentLocation, setCurrentLocation, locationData, setLocationData } =
+    useAppContext();
   const { navigate } = useNavigation();
 
-  const handleSeeMore = () =>
-    navigate(Screens.WEATHER_DETAILS, {
-      locationData: locationData as ApiResponse,
-      favoriteLocation,
-      setFavoriteLocation,
-    });
+  const handleSeeMore = () => navigate(Screens.WEATHER_DETAILS);
 
   const handleGetLocationData = async () => {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${currentLocation}&appid=4106e5225b26a4b2b9c66f75ebb47425&units=metric`;
@@ -42,7 +36,13 @@ export const Homepage = () => {
       );
     }
 
-    if (locationData.cod === 200) {
+    if (locationData.cod !== 200) {
+      return (
+        <Text style={homepageStyles.info}>
+          Couldn't find the location, please try again
+        </Text>
+      );
+    } else {
       return (
         <Fragment>
           <Text style={homepageStyles.city}>{locationData.name}</Text>
@@ -54,12 +54,6 @@ export const Homepage = () => {
           </Text>
           <Button onPress={handleSeeMore}>Check Weather Details</Button>
         </Fragment>
-      );
-    } else {
-      return (
-        <Text style={homepageStyles.info}>
-          Couldn't find the location, please try again
-        </Text>
       );
     }
   };

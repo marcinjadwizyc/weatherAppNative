@@ -11,6 +11,7 @@ import { Fragment } from "react";
 
 import { Homepage, WeatherDetails } from "./screens";
 import { Screens, StackParamList } from "./utils/navigation";
+import { AppContextProvider } from "./context";
 
 const App = () => {
   const Stack = createNativeStackNavigator<StackParamList>();
@@ -26,21 +27,23 @@ const App = () => {
 
   return (
     <Fragment>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={Screens.HOMEPAGE}
-          screenOptions={{
-            headerShown: false,
-            animation: "none",
-          }}
-        >
-          <Stack.Screen name={Screens.HOMEPAGE} component={Homepage} />
-          <Stack.Screen
-            name={Screens.WEATHER_DETAILS}
-            component={WeatherDetails}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <AppContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName={Screens.HOMEPAGE}
+            screenOptions={{
+              headerShown: false,
+              animation: "none",
+            }}
+          >
+            <Stack.Screen name={Screens.HOMEPAGE} component={Homepage} />
+            <Stack.Screen
+              name={Screens.WEATHER_DETAILS}
+              component={WeatherDetails}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AppContextProvider>
       <StatusBar style="light" />
     </Fragment>
   );

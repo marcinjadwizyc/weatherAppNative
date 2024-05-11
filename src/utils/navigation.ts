@@ -1,5 +1,4 @@
 import { RouteProp } from "@react-navigation/native";
-import { ApiResponse } from "./types";
 
 export enum Screens {
   HOMEPAGE = "Homepage",
@@ -8,11 +7,7 @@ export enum Screens {
 
 export type StackParamList = {
   [Screens.HOMEPAGE]: undefined;
-  [Screens.WEATHER_DETAILS]: {
-    locationData: ApiResponse;
-    favoriteLocation: string;
-    setFavoriteLocation: (value: string) => void;
-  };
+  [Screens.WEATHER_DETAILS]: undefined;
 };
 
 export type WeatherDetailsScreenRouteProp = RouteProp<
