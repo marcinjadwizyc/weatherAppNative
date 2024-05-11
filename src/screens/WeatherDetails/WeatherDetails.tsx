@@ -1,9 +1,16 @@
-import { Text, View } from "react-native";
+import { Button, Container } from "../../components";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { WeatherDetailsScreenRouteProp } from "../../utils/navigation";
 
 export const WeatherDetails = () => {
+  const { goBack } = useNavigation();
+  const {
+    params: { locationData },
+  } = useRoute<WeatherDetailsScreenRouteProp>();
+
   return (
-    <View>
-      <Text>WeatherDetails</Text>
-    </View>
+    <Container>
+      <Button onPress={goBack}>Go Back</Button>
+    </Container>
   );
 };

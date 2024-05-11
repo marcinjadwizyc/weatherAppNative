@@ -31,6 +31,7 @@ const App = () => {
           initialRouteName={Screens.HOMEPAGE}
           screenOptions={{
             headerShown: false,
+            animation: "none",
           }}
         >
           <Stack.Screen name={Screens.HOMEPAGE} component={Homepage} />
