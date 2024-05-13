@@ -1,8 +1,7 @@
 import { StyleSheet } from "react-native";
-import { Fonts } from "../../utils/fonts";
-import { Colors } from "../../utils/colors";
+import { Colors, FontStyles } from "../../utils";
 
-export const buttonStyles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     alignSelf: "flex-start",
     paddingHorizontal: 24,
@@ -11,9 +10,7 @@ export const buttonStyles = StyleSheet.create({
     borderRadius: 12,
   },
   text: {
-    fontFamily: Fonts.OUTFIT_REGULAR,
-    fontSize: 18,
-    color: Colors.WHITE,
     lineHeight: 20,
+    ...FontStyles.regularSmall,
   },
 });

@@ -27,27 +27,40 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
   const storageKey = "weatherAppNative";
 
   const [favoriteLocation, setFavoriteLocation] = useState("");
-  const [currentLocation, setCurrentLocation] = useState(favoriteLocation);
+  const [currentLocation, setCurrentLocation] = useState("");
   const [locationData, setLocationData] = useState<ApiResponse>();
 
-  const handleSaveFavoriteLocationToStorage = async () => {
-    await AsyncStorage.setItem(storageKey, favoriteLocation);
+  const handleSaveToStorage = async () => {
+    try {
+      const savedLocation = await AsyncStorage.getItem(storageKey);
+
+      if (favoriteLocation !== savedLocation) {
+        await AsyncStorage.setItem(storageKey, favoriteLocation);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleLoadFavoriteLocationFromStorage = async () => {
-    const location = await AsyncStorage.getItem(storageKey);
+  const handleLoadFromStorage = async () => {
+    try {
+      const location = await AsyncStorage.getItem(storageKey);
 
-    if (location) {
-      setCurrentLocation(location);
+      if (location) {
+        setCurrentLocation(location);
+        setFavoriteLocation(location);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
-    handleLoadFavoriteLocationFromStorage();
+    handleLoadFromStorage();
   }, []);
 
   useEffect(() => {
-    handleSaveFavoriteLocationToStorage();
+    handleSaveToStorage();
   }, [favoriteLocation]);
 
   return (

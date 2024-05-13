@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity } from "react-native";
-import { buttonStyles } from "./Button.styles";
+import { styles } from "./Button.styles";
 
 interface ButtonProps {
   onPress: () => void;
@@ -8,8 +8,8 @@ interface ButtonProps {
 
 export const Button = ({ onPress, children }: ButtonProps) => {
   return (
-    <TouchableOpacity onPress={onPress} style={buttonStyles.container}>
-      <Text style={buttonStyles.text}>{children}</Text>
+    <TouchableOpacity onPress={onPress} style={styles.container}>
+      <Text style={styles.text}>{children}</Text>
     </TouchableOpacity>
   );
 };

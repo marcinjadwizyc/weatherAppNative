@@ -1,22 +1,17 @@
-import { Button, Container } from "../../components";
 import { useNavigation } from "@react-navigation/native";
-import { useAppContext } from "../../context";
-import { Text, View } from "react-native";
 import { Fragment } from "react";
-import { weatherDetialsStyles } from "./WeatherDetails.styles";
-import { ApiResponse } from "../../utils/types";
+import { Text, View } from "react-native";
+import { styles } from "./WeatherDetails.styles";
+
+import { Button, Container, ExtraInfo } from "../../components";
+import { useAppContext } from "../../context";
 
 export const WeatherDetails = () => {
-  const {
-    favoriteLocation,
-    setFavoriteLocation,
-    setCurrentLocation,
-    locationData,
-  } = useAppContext();
+  const { setFavoriteLocation, locationData } = useAppContext();
   const { goBack } = useNavigation();
 
-  const handleToggleFavoriteLocation = () => {
-    setFavoriteLocation((locationData as ApiResponse).name);
+  const handleMakeFavoritePress = () => {
+    setFavoriteLocation(locationData ? locationData.name : "");
   };
 
   return (
@@ -24,39 +19,27 @@ export const WeatherDetails = () => {
       <Button onPress={goBack}>Go Back</Button>
       {locationData && (
         <Fragment>
-          <View style={weatherDetialsStyles.container}>
-            <Text style={weatherDetialsStyles.city}>{locationData.name}</Text>
-            <Text style={weatherDetialsStyles.temp}>
+          <View style={styles.container}>
+            <Text style={styles.city}>{locationData.name}</Text>
+            <Text style={styles.temp}>
               {locationData.main.temp.toFixed()}&deg;C
             </Text>
           </View>
-          <View style={weatherDetialsStyles.extraInfoContainer}>
-            <View style={weatherDetialsStyles.extraInfoSection}>
-              <Text style={weatherDetialsStyles.extraInfoValue}>
-                {locationData.main.feels_like.toFixed()}&deg;C
-              </Text>
-              <Text style={weatherDetialsStyles.extraInfoDescription}>
-                Feels like
-              </Text>
-            </View>
-            <View style={weatherDetialsStyles.extraInfoSection}>
-              <Text style={weatherDetialsStyles.extraInfoValue}>
-                {locationData.main.humidity}%
-              </Text>
-              <Text style={weatherDetialsStyles.extraInfoDescription}>
-                Humidity
-              </Text>
-            </View>
-            <View style={weatherDetialsStyles.extraInfoSection}>
-              <Text style={weatherDetialsStyles.extraInfoValue}>
-                {locationData.main.pressure} hPa
-              </Text>
-              <Text style={weatherDetialsStyles.extraInfoDescription}>
-                Pressure
-              </Text>
-            </View>
+          <View style={styles.extraInfoContainer}>
+            <ExtraInfo
+              value={`${locationData.main.feels_like.toFixed()}\u00B0C`}
+              description="Feels like"
+            />
+            <ExtraInfo
+              value={`${locationData.main.humidity}%`}
+              description="Humidity"
+            />
+            <ExtraInfo
+              value={`${locationData.main.pressure} hpa`}
+              description="Pressure"
+            />
           </View>
-          <Button onPress={handleToggleFavoriteLocation}>Make Favorite</Button>
+          <Button onPress={handleMakeFavoritePress}>Make Favorite</Button>
         </Fragment>
       )}
     </Container>

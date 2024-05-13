@@ -1,6 +1,6 @@
 import { TextInput, View } from "react-native";
 import { Button } from "../Button";
-import { searchInputStyles } from "./SearchInput.styles";
+import { styles } from "./SearchInput.styles";
 import { Colors } from "../../utils/colors";
 
 interface SearchInputProps {
@@ -15,11 +15,11 @@ export const SearchInput = ({
   onPress,
 }: SearchInputProps) => {
   return (
-    <View style={searchInputStyles.container}>
+    <View style={styles.container}>
       <TextInput
         value={value}
         onChangeText={onChangeText}
-        style={searchInputStyles.input}
+        style={styles.input}
         placeholder="Location..."
         placeholderTextColor={Colors.WHITE}
       />

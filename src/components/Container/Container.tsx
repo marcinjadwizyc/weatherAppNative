@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { ImageBackground, View } from "react-native";
-import { containerStyles } from "./Container.styles";
+import { styles } from "./Container.styles";
 
 interface ContainerProps {
   children: ReactNode;
@@ -12,9 +12,9 @@ export const Container = ({ children }: ContainerProps) => {
   };
 
   return (
-    <View style={containerStyles.container}>
-      <ImageBackground source={image} style={containerStyles.background}>
-        <View style={containerStyles.content}>{children}</View>
+    <View style={styles.container}>
+      <ImageBackground source={image} style={styles.background}>
+        <View style={styles.content}>{children}</View>
       </ImageBackground>
     </View>
   );
