@@ -1,5 +1,12 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { ApiResponse } from "../utils/types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface IAppContext {
   favoriteLocation: string;
@@ -17,9 +24,31 @@ interface AppContextProviderProps {
 const AppContext = createContext<IAppContext>(undefined!);
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
+  const storageKey = "weatherAppNative";
+
   const [favoriteLocation, setFavoriteLocation] = useState("");
   const [currentLocation, setCurrentLocation] = useState(favoriteLocation);
   const [locationData, setLocationData] = useState<ApiResponse>();
+
+  const handleSaveFavoriteLocationToStorage = async () => {
+    await AsyncStorage.setItem(storageKey, favoriteLocation);
+  };
+
+  const handleLoadFavoriteLocationFromStorage = async () => {
+    const location = await AsyncStorage.getItem(storageKey);
+
+    if (location) {
+      setCurrentLocation(location);
+    }
+  };
+
+  useEffect(() => {
+    handleLoadFavoriteLocationFromStorage();
+  }, []);
+
+  useEffect(() => {
+    handleSaveFavoriteLocationToStorage();
+  }, [favoriteLocation]);
 
   return (
     <AppContext.Provider

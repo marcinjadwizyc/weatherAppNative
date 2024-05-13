@@ -24,7 +24,6 @@ export const Homepage = () => {
     const data = (await response.json()) as ApiResponse;
 
     setLocationData(data);
-    setCurrentLocation("");
   };
 
   const getContent = () => {

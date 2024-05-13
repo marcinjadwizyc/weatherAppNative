@@ -16,7 +16,7 @@ export const WeatherDetails = () => {
   const { goBack } = useNavigation();
 
   const handleToggleFavoriteLocation = () => {
-    setCurrentLocation((locationData as ApiResponse).name);
+    setFavoriteLocation((locationData as ApiResponse).name);
   };
 
   return (
