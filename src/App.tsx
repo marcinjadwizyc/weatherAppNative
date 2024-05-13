@@ -7,7 +7,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { registerRootComponent } from "expo";
 import { StatusBar } from "expo-status-bar";
-import { Fragment } from "react";
+import * as SplashScreen from "expo-splash-screen";
+import { Fragment, useEffect } from "react";
 
 import { Homepage, WeatherDetails } from "./screens";
 import { Screens, StackParamList } from "./utils/navigation";
@@ -20,6 +21,12 @@ const App = () => {
     Outfit_400Regular,
     Outfit_800ExtraBold,
   });
+
+  useEffect(() => {
+    if (fontLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontLoaded]);
 
   if (!fontLoaded && !fontError) {
     return null;
