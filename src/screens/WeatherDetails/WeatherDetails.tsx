@@ -7,11 +7,16 @@ import { Button, Container, ExtraInfo } from "../../components";
 import { useAppContext } from "../../context";
 
 export const WeatherDetails = () => {
-  const { setFavoriteLocation, locationData } = useAppContext();
+  const { favoriteLocation, setFavoriteLocation, locationData } =
+    useAppContext();
   const { goBack } = useNavigation();
 
+  const isFavoriteLocation = favoriteLocation === locationData?.name;
+
   const handleMakeFavoritePress = () => {
-    setFavoriteLocation(locationData ? locationData.name : "");
+    if (locationData) {
+      setFavoriteLocation(locationData.name);
+    }
   };
 
   return (
@@ -39,7 +44,9 @@ export const WeatherDetails = () => {
               description="Pressure"
             />
           </View>
-          <Button onPress={handleMakeFavoritePress}>Make Favorite</Button>
+          {!isFavoriteLocation && (
+            <Button onPress={handleMakeFavoritePress}>Make Favorite</Button>
+          )}
         </Fragment>
       )}
     </Container>
