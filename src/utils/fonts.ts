@@ -5,30 +5,35 @@ export enum Fonts {
   OUTFIT_BOLD = "Outfit_800ExtraBold",
 }
 
+const regularBaseFont = {
+  fontFamily: Fonts.OUTFIT_REGULAR,
+  color: Colors.WHITE,
+};
+
+const boldBaseFont = {
+  fontFamily: Fonts.OUTFIT_BOLD,
+  color: Colors.WHITE,
+};
+
 export const FontStyles = {
   regularSmall: {
-    fontFamily: Fonts.OUTFIT_REGULAR,
-    color: Colors.WHITE,
     fontSize: 18,
+    ...regularBaseFont,
   },
   regularMedium: {
-    fontFamily: Fonts.OUTFIT_REGULAR,
     fontSize: 24,
-    color: Colors.WHITE,
+    ...regularBaseFont,
   },
   regularLarge: {
-    fontFamily: Fonts.OUTFIT_REGULAR,
     fontSize: 32,
-    color: Colors.WHITE,
+    ...regularBaseFont,
   },
   boldSmall: {
-    fontFamily: Fonts.OUTFIT_BOLD,
     fontSize: 24,
-    color: Colors.WHITE,
+    ...boldBaseFont,
   },
   boldLarge: {
-    fontFamily: Fonts.OUTFIT_BOLD,
     fontSize: 50,
-    color: Colors.WHITE,
+    ...boldBaseFont,
   },
 };
