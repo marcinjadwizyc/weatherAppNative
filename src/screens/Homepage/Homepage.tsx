@@ -15,7 +15,7 @@ export const Homepage = () => {
   const handleSeeMorePress = () => navigate(Screens.WEATHER_DETAILS);
 
   const handleGetLocationData = async () => {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${currentLocation}&appid=4106e5225b26a4b2b9c66f75ebb47425&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${currentLocation}&appid=${process.env.EXPO_PUBLIC_API_KEY}&units=metric`;
 
     const response = await fetch(url);
     const data = (await response.json()) as ApiResponse;
