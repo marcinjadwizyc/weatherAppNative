@@ -3,8 +3,8 @@ import { Fragment } from "react";
 import { Text, View } from "react-native";
 import { styles } from "./WeatherDetails.styles";
 
-import { Button, Container, ExtraInfo } from "../../components";
-import { useAppContext } from "../../context";
+import { Button, Container, ExtraInfo } from "@components";
+import { useAppContext } from "@context";
 
 export const WeatherDetails = () => {
   const { favoriteLocation, setFavoriteLocation, locationData } =

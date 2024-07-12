@@ -11,8 +11,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { Fragment, useEffect } from "react";
 
 import { Homepage, WeatherDetails } from "./screens";
-import { Screens, StackParamList } from "./utils/navigation";
-import { AppContextProvider } from "./context";
+import { Screens, StackParamList } from "@utils";
+import { AppContextProvider } from "@context";
 
 const App = () => {
   const Stack = createNativeStackNavigator<StackParamList>();

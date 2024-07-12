@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   ReactNode,
   createContext,
@@ -5,8 +6,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import { ApiResponse } from "../utils/types";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { ApiResponse } from "@utils";
 
 interface IAppContext {
   favoriteLocation: string;

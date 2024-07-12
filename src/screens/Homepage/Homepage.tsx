@@ -1,11 +1,11 @@
 import { Fragment } from "react";
 import { Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { styles } from "./Homepage.styles";
 
-import { Button, Container, SearchInput } from "../../components";
-import { useAppContext } from "../../context";
-import { ApiResponse, Screens, capitalize } from "../../utils";
+import { Button, Container, SearchInput } from "@components";
+import { useAppContext } from "@context";
+import { ApiResponse, Screens, capitalize } from "@utils";
+import { styles } from "./Homepage.styles";
 
 export const Homepage = () => {
   const { currentLocation, setCurrentLocation, locationData, setLocationData } =

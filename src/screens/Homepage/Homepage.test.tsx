@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react-native";
-import { Homepage } from "./Homepage";
 import { NavigationContainer } from "@react-navigation/native";
-import { useAppContext } from "../../context";
+
+import { useAppContext } from "@context";
+import { Homepage } from "./Homepage";
 
 jest.mock("../../context", () => ({
   useAppContext: jest.fn(),

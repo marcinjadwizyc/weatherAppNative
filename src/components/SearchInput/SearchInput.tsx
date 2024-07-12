@@ -1,7 +1,7 @@
 import { TextInput, View } from "react-native";
 import { Button } from "../Button";
 import { styles } from "./SearchInput.styles";
-import { Colors } from "../../utils/colors";
+import { Colors } from "@utils";
 
 interface SearchInputProps {
   value: string;
