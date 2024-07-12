@@ -1,13 +1,14 @@
-import { render, screen } from "@testing-library/react-native";
-import { ExtraInfo } from "./ExtraInfo";
+import { render, screen } from '@testing-library/react-native';
 
-const value = "Value";
-const description = "Description";
+import { ExtraInfo } from './ExtraInfo';
 
-describe("ExtraInfo", () => {
-  it("should render the values & description", () => {
-    render(<ExtraInfo value={value} description={description} />);
-    expect(screen.getByText(value)).toBeTruthy();
-    expect(screen.getByText(description)).toBeTruthy();
-  });
+const value = 'Value';
+const description = 'Description';
+
+describe('ExtraInfo', () => {
+	it('should render the values & description', () => {
+		render(<ExtraInfo value={value} description={description} />);
+		expect(screen.getByText(value)).toBeTruthy();
+		expect(screen.getByText(description)).toBeTruthy();
+	});
 });

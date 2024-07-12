@@ -1,5 +1,7 @@
 export enum Colors {
-  WHITE = "#fff",
-  BLACK_OPACITY = "rgba(0, 0, 0, 0.2)",
-  TEAL = "#38B2AC",
+	WHITE = '#fff',
+	BLUE = '#0892ff',
+
+	BACKGROUND_DARK = '#0b121e',
+	BACKGROUND_CARD_DARK = '#202b3c',
 }
