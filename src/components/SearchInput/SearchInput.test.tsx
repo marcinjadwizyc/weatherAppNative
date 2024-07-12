@@ -11,18 +11,23 @@ const mockProps: SearchInputProps = {
 describe('SearchInput', () => {
 	it('should render the value', () => {
 		render(<SearchInput {...mockProps} />);
+
 		expect(screen.getByDisplayValue(mockProps.value)).toBeTruthy();
 	});
 
 	it('should update the value', () => {
 		render(<SearchInput {...mockProps} />);
+
 		fireEvent.changeText(screen.getByDisplayValue(mockProps.value), 'New Value');
+
 		expect(mockProps.onChangeText).toHaveBeenCalledWith('New Value');
 	});
 
 	it('should call an action on button press', () => {
 		render(<SearchInput {...mockProps} />);
+
 		fireEvent.press(screen.getByText('Search'));
+
 		expect(mockProps.onPress).toHaveBeenCalled();
 	});
 });

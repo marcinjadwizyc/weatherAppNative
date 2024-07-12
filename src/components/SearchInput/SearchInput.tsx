@@ -4,7 +4,7 @@ import { TextInput, View } from 'react-native';
 import { Button } from '../Button';
 import { styles } from './SearchInput.styles';
 
-interface SearchInputProps {
+export interface SearchInputProps {
 	value: string;
 	onChangeText: (value: string) => void;
 	onPress: () => void;

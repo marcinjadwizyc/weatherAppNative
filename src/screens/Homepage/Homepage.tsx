@@ -1,11 +1,12 @@
 import { Button, Container, SearchInput } from '@components';
 import { useAppContext } from '@context';
 import { useNavigation } from '@react-navigation/native';
-import { ApiResponse, capitalize, Screens } from '@utils';
+import { ApiResponse, capitalize } from '@utils';
 import { Fragment } from 'react';
 import { Text, View } from 'react-native';
 
 import { styles } from './Homepage.styles';
+import { Screens } from '@navigator/screens';
 
 export const Homepage = () => {
 	const { currentLocation, setCurrentLocation, locationData, setLocationData } = useAppContext();
@@ -35,7 +36,7 @@ export const Homepage = () => {
 					<Text style={styles.city}>{locationData.name}</Text>
 					<Text style={styles.temp}>{locationData.main.temp.toFixed()}&deg;C</Text>
 					<Text style={styles.description}>{capitalize(locationData.weather[0].description)}</Text>
-					<Button onPress={handleSeeMorePress}>Check Weather Details</Button>
+					<Button onPress={handleSeeMorePress}>See More</Button>
 				</Fragment>
 			);
 		}
