@@ -7,9 +7,3 @@ export type StackParamList = {
 	[Screens.HOMEPAGE]: undefined;
 	[Screens.WEATHER_DETAILS]: undefined;
 };
-
-declare global {
-	namespace ReactNavigation {
-		interface RootParamList extends StackParamList {}
-	}
-}

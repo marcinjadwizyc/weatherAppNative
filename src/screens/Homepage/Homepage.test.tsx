@@ -46,7 +46,7 @@ describe('Homepage', () => {
 		);
 
 		expect(screen.getByText('Poznań')).toBeTruthy();
-		expect(screen.getByText('Check Weather Details')).toBeTruthy();
+		expect(screen.getByText('See More')).toBeTruthy();
 	});
 
 	it('should render error state', () => {
