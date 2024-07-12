@@ -1,15 +1,16 @@
-import { ReactNode } from "react";
-import { View } from "react-native";
-import { styles } from "./Container.styles";
+import { ReactNode } from 'react';
+import { View } from 'react-native';
+
+import { styles } from './Container.styles';
 
 interface ContainerProps {
-  children: ReactNode;
+	children: ReactNode;
 }
 
 export const Container = ({ children }: ContainerProps) => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.content}>{children}</View>
-    </View>
-  );
+	return (
+		<View style={styles.container}>
+			<View style={styles.content}>{children}</View>
+		</View>
+	);
 };

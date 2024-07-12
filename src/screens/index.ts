@@ -1,2 +1,2 @@
-export { Homepage } from "./Homepage";
-export { WeatherDetails } from "./WeatherDetails";
+export { Homepage } from './Homepage';
+export { WeatherDetails } from './WeatherDetails';
