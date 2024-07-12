@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     alignSelf: "flex-start",
     paddingHorizontal: 24,
     paddingVertical: 12,
-    backgroundColor: Colors.TEAL,
+    backgroundColor: Colors.BLUE,
     borderRadius: 12,
   },
   text: {

@@ -20,11 +20,11 @@ export const styles = StyleSheet.create({
   },
   extraInfoContainer: {
     flexDirection: "row",
-    backgroundColor: Colors.BLACK_OPACITY,
+    backgroundColor: Colors.BACKGROUND_CARD_DARK,
     borderRadius: 24,
     justifyContent: "space-between",
     paddingHorizontal: 24,
-    paddingVertical: 6,
+    paddingVertical: 12,
     marginBottom: 24,
   },
 });
