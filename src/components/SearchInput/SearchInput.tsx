@@ -1,9 +1,9 @@
+import { useThemeContext } from '@context';
 import { Colors, themeStyles } from '@styles';
 import { TextInput, View } from 'react-native';
 
 import { Button } from '../Button';
 import { styles } from './SearchInput.styles';
-import { useThemeContext } from '@context';
 
 export interface SearchInputProps {
 	value: string;

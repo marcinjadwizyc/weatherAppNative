@@ -1,9 +1,9 @@
 import { Button, Container, ExtraInfo } from '@components';
 import { useAppContext, useThemeContext } from '@context';
+import { themeStyles } from '@styles';
 import { Text, View } from 'react-native';
 
 import { styles } from './WeatherDetails.styles';
-import { themeStyles } from '@styles';
 
 export const WeatherDetails = () => {
 	const { favoriteLocation, setFavoriteLocation, locationData } = useAppContext();

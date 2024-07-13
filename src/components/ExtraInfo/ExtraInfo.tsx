@@ -1,8 +1,8 @@
+import { useThemeContext } from '@context';
+import { themeStyles } from '@styles';
 import { Text, View } from 'react-native';
 
 import { styles } from './ExtraInfo.styles';
-import { useThemeContext } from '@context';
-import { themeStyles } from '@styles';
 
 interface ExtraInfoProps {
 	value: string;
