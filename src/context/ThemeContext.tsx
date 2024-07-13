@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { getFromStorage, saveToStorage } from '@utils';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark';
 
@@ -17,11 +18,29 @@ const ThemeContext = createContext<IThemeContext>({
 });
 
 export const ThemeContextProvider = ({ children }: ThemeContextProviderProps) => {
+	const storageKey = 'weatherAppNativeTheme';
+
 	const [theme, setTheme] = useState<Theme>('light');
 
 	const toggleTheme = () => {
 		setTheme(prevState => (prevState === 'light' ? 'dark' : 'light'));
 	};
+
+	useEffect(() => {
+		const getThemeFromStorage = async () => {
+			const savedTheme = await getFromStorage(storageKey);
+
+			if (savedTheme === 'light' || savedTheme === 'dark') {
+				setTheme(savedTheme);
+			}
+		};
+
+		getThemeFromStorage();
+	}, []);
+
+	useEffect(() => {
+		saveToStorage(storageKey, theme);
+	}, [theme]);
 
 	return (
 		<ThemeContext.Provider

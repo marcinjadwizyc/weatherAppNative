@@ -1,5 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ApiResponse } from '@utils';
+import { ApiResponse, getFromStorage, saveToStorage } from '@utils';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 interface IAppContext {
@@ -32,27 +31,19 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 	const [locationData, setLocationData] = useState<ApiResponse>();
 
 	const handleSaveToStorage = async () => {
-		try {
-			const savedLocation = await AsyncStorage.getItem(storageKey);
+		const savedLocation = await getFromStorage(storageKey);
 
-			if (favoriteLocation !== savedLocation) {
-				await AsyncStorage.setItem(storageKey, favoriteLocation);
-			}
-		} catch (error) {
-			console.log(error);
+		if (favoriteLocation !== savedLocation) {
+			saveToStorage(storageKey, favoriteLocation);
 		}
 	};
 
 	const handleLoadFromStorage = async () => {
-		try {
-			const location = await AsyncStorage.getItem(storageKey);
+		const location = await getFromStorage(storageKey);
 
-			if (location) {
-				setCurrentLocation(location);
-				setFavoriteLocation(location);
-			}
-		} catch (error) {
-			console.log(error);
+		if (location) {
+			setCurrentLocation(location);
+			setFavoriteLocation(location);
 		}
 	};
 
