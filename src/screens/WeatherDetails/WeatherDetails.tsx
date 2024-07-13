@@ -1,7 +1,5 @@
 import { Button, Container, ExtraInfo } from '@components';
 import { useAppContext, useThemeContext } from '@context';
-import { useNavigation } from '@react-navigation/native';
-import { Fragment } from 'react';
 import { Text, View } from 'react-native';
 
 import { styles } from './WeatherDetails.styles';
@@ -9,7 +7,6 @@ import { themeStyles } from '@styles';
 
 export const WeatherDetails = () => {
 	const { favoriteLocation, setFavoriteLocation, locationData } = useAppContext();
-	const { goBack } = useNavigation();
 	const { theme } = useThemeContext();
 
 	const fontClass = themeStyles[`font_${theme}`];
@@ -24,10 +21,9 @@ export const WeatherDetails = () => {
 
 	return (
 		<Container>
-			<Button onPress={goBack}>Go Back</Button>
 			{locationData && (
-				<Fragment>
-					<View style={styles.container}>
+				<View style={styles.container}>
+					<View>
 						<Text style={[styles.city, fontClass]}>{locationData.name}</Text>
 						<Text style={[styles.temp, fontClass]}>{locationData.main.temp.toFixed()}&deg;C</Text>
 					</View>
@@ -40,7 +36,7 @@ export const WeatherDetails = () => {
 						<ExtraInfo value={`${locationData.main.pressure} hpa`} description='Pressure' />
 					</View>
 					{!isFavoriteLocation && <Button onPress={handleMakeFavoritePress}>Make Favorite</Button>}
-				</Fragment>
+				</View>
 			)}
 		</Container>
 	);

@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	value: {
-		marginBottom: 6,
 		...FontStyles.boldSmall,
 	},
 	description: {

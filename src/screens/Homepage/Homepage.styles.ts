@@ -4,18 +4,17 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
 	content: {
 		flex: 1,
-		marginTop: 24,
+		marginTop: 16,
+		alignItems: 'flex-start',
 	},
 	city: {
 		...FontStyles.regularLarge,
 	},
 	temp: {
-		marginTop: 12,
-		marginBottom: 6,
 		...FontStyles.boldLarge,
 	},
 	description: {
-		marginBottom: 24,
+		marginBottom: 16,
 		...FontStyles.regularMedium,
 	},
 	info: {

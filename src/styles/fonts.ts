@@ -14,22 +14,27 @@ const boldBaseFont = {
 export const FontStyles = {
 	regularSmall: {
 		fontSize: 18,
+		lineHeight: 27,
 		...regularBaseFont,
 	},
 	regularMedium: {
 		fontSize: 24,
+		lineHeight: 36,
 		...regularBaseFont,
 	},
 	regularLarge: {
 		fontSize: 32,
+		lineHeight: 48,
 		...regularBaseFont,
 	},
 	boldSmall: {
 		fontSize: 24,
+		lineHeight: 36,
 		...boldBaseFont,
 	},
 	boldLarge: {
 		fontSize: 50,
+		lineHeight: 75,
 		...boldBaseFont,
 	},
 };
