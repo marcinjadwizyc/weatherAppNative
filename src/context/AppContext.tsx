@@ -15,7 +15,14 @@ interface AppContextProviderProps {
 	children: ReactNode;
 }
 
-const AppContext = createContext<IAppContext>(undefined!);
+const AppContext = createContext<IAppContext>({
+	favoriteLocation: '',
+	currentLocation: '',
+	locationData: undefined,
+	setFavoriteLocation: () => {},
+	setCurrentLocation: () => {},
+	setLocationData: () => {},
+});
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 	const storageKey = 'weatherAppNative';

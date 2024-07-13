@@ -1,14 +1,18 @@
 import { Button, Container, ExtraInfo } from '@components';
-import { useAppContext } from '@context';
+import { useAppContext, useThemeContext } from '@context';
 import { useNavigation } from '@react-navigation/native';
 import { Fragment } from 'react';
 import { Text, View } from 'react-native';
 
 import { styles } from './WeatherDetails.styles';
+import { themeStyles } from '@styles';
 
 export const WeatherDetails = () => {
 	const { favoriteLocation, setFavoriteLocation, locationData } = useAppContext();
 	const { goBack } = useNavigation();
+	const { theme } = useThemeContext();
+
+	const fontClass = themeStyles[`font_${theme}`];
 
 	const isFavoriteLocation = favoriteLocation === locationData?.name;
 
@@ -24,10 +28,10 @@ export const WeatherDetails = () => {
 			{locationData && (
 				<Fragment>
 					<View style={styles.container}>
-						<Text style={styles.city}>{locationData.name}</Text>
-						<Text style={styles.temp}>{locationData.main.temp.toFixed()}&deg;C</Text>
+						<Text style={[styles.city, fontClass]}>{locationData.name}</Text>
+						<Text style={[styles.temp, fontClass]}>{locationData.main.temp.toFixed()}&deg;C</Text>
 					</View>
-					<View style={styles.extraInfoContainer}>
+					<View style={[styles.extraInfoContainer, themeStyles[`card_${theme}`]]}>
 						<ExtraInfo
 							value={`${locationData.main.feels_like.toFixed()}\u00B0C`}
 							description='Feels like'

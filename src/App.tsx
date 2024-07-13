@@ -1,10 +1,9 @@
-import { AppContextProvider } from '@context';
+import { AppContextProvider, ThemeContextProvider } from '@context';
 import { Outfit_400Regular, Outfit_800ExtraBold, useFonts } from '@expo-google-fonts/outfit';
 import { StackNavigator } from '@navigator/navigator';
 import { NavigationContainer } from '@react-navigation/native';
 import { registerRootComponent } from 'expo';
 import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
 import { Fragment, useEffect } from 'react';
 
 const App = () => {
@@ -25,12 +24,13 @@ const App = () => {
 
 	return (
 		<Fragment>
-			<AppContextProvider>
-				<NavigationContainer>
-					<StackNavigator />
-				</NavigationContainer>
-			</AppContextProvider>
-			<StatusBar style='light' />
+			<ThemeContextProvider>
+				<AppContextProvider>
+					<NavigationContainer>
+						<StackNavigator />
+					</NavigationContainer>
+				</AppContextProvider>
+			</ThemeContextProvider>
 		</Fragment>
 	);
 };

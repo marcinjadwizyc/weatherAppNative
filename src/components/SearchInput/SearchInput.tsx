@@ -1,8 +1,9 @@
-import { Colors } from '@styles';
+import { Colors, themeStyles } from '@styles';
 import { TextInput, View } from 'react-native';
 
 import { Button } from '../Button';
 import { styles } from './SearchInput.styles';
+import { useThemeContext } from '@context';
 
 export interface SearchInputProps {
 	value: string;
@@ -11,14 +12,16 @@ export interface SearchInputProps {
 }
 
 export const SearchInput = ({ value, onChangeText, onPress }: SearchInputProps) => {
+	const { theme } = useThemeContext();
+
 	return (
 		<View style={styles.container}>
 			<TextInput
 				value={value}
 				onChangeText={onChangeText}
-				style={styles.input}
+				style={[styles.input, themeStyles[`border_${theme}`], themeStyles[`font_${theme}`]]}
 				placeholder='Location...'
-				placeholderTextColor={Colors.WHITE}
+				placeholderTextColor={theme === 'light' ? Colors.BLACK : Colors.WHITE}
 			/>
 			<Button onPress={onPress}>Search</Button>
 		</View>
