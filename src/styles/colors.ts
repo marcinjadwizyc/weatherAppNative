@@ -8,6 +8,6 @@ export enum Colors {
 	BACKGROUND_CARD_DARK = '#202b3c',
 
 	// LIGH THEME
-	BACKGROUND_LIGHT = '',
-	BACKGROUND_CARD_LIGHT = '',
+	BACKGROUND_LIGHT = '#fff',
+	BACKGROUND_CARD_LIGHT = '#eaf5fd',
 }

@@ -1,9 +1,9 @@
-import { Colors, FontStyles } from '@utils';
+import { FontStyles } from '@styles';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
 	container: {
-		marginTop: 24,
+		alignItems: 'flex-start',
 	},
 	cityContainer: {
 		flexDirection: 'row',
@@ -14,13 +14,11 @@ export const styles = StyleSheet.create({
 		...FontStyles.regularLarge,
 	},
 	temp: {
-		marginTop: 12,
-		marginBottom: 32,
 		...FontStyles.boldLarge,
 	},
 	extraInfoContainer: {
+		width: '100%',
 		flexDirection: 'row',
-		backgroundColor: Colors.BACKGROUND_CARD_DARK,
 		borderRadius: 24,
 		justifyContent: 'space-between',
 		paddingHorizontal: 24,

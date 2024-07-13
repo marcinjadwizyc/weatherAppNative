@@ -1,4 +1,4 @@
-import { FontStyles } from '@utils';
+import { FontStyles } from '@styles';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	value: {
-		marginBottom: 6,
 		...FontStyles.boldSmall,
 	},
 	description: {

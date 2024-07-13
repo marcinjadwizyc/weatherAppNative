@@ -1,5 +1,3 @@
-import { Colors } from './colors';
-
 export enum Fonts {
 	OUTFIT_REGULAR = 'Outfit_400Regular',
 	OUTFIT_BOLD = 'Outfit_800ExtraBold',
@@ -7,33 +5,36 @@ export enum Fonts {
 
 const regularBaseFont = {
 	fontFamily: Fonts.OUTFIT_REGULAR,
-	color: Colors.WHITE,
 };
 
 const boldBaseFont = {
 	fontFamily: Fonts.OUTFIT_BOLD,
-	color: Colors.WHITE,
 };
 
 export const FontStyles = {
 	regularSmall: {
 		fontSize: 18,
+		lineHeight: 27,
 		...regularBaseFont,
 	},
 	regularMedium: {
 		fontSize: 24,
+		lineHeight: 36,
 		...regularBaseFont,
 	},
 	regularLarge: {
 		fontSize: 32,
+		lineHeight: 48,
 		...regularBaseFont,
 	},
 	boldSmall: {
 		fontSize: 24,
+		lineHeight: 36,
 		...boldBaseFont,
 	},
 	boldLarge: {
 		fontSize: 50,
+		lineHeight: 75,
 		...boldBaseFont,
 	},
 };

@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Screens, StackParamList } from './screens';
 import { Homepage, WeatherDetails } from '@screens';
+
+import { Screens, StackParamList } from './screens';
 
 declare global {
 	namespace ReactNavigation {
