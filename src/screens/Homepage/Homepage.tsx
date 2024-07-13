@@ -1,12 +1,12 @@
 import { Button, Container, SearchInput } from '@components';
 import { useAppContext } from '@context';
+import { Screens } from '@navigator/screens';
 import { useNavigation } from '@react-navigation/native';
 import { ApiResponse, capitalize } from '@utils';
 import { Fragment } from 'react';
 import { Text, View } from 'react-native';
 
 import { styles } from './Homepage.styles';
-import { Screens } from '@navigator/screens';
 
 export const Homepage = () => {
 	const { currentLocation, setCurrentLocation, locationData, setLocationData } = useAppContext();

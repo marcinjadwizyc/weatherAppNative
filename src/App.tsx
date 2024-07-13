@@ -1,12 +1,11 @@
 import { AppContextProvider } from '@context';
 import { Outfit_400Regular, Outfit_800ExtraBold, useFonts } from '@expo-google-fonts/outfit';
+import { StackNavigator } from '@navigator/navigator';
 import { NavigationContainer } from '@react-navigation/native';
 import { registerRootComponent } from 'expo';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { Fragment, useEffect } from 'react';
-
-import { StackNavigator } from '@navigator/navigator';
 
 const App = () => {
 	const [fontLoaded, fontError] = useFonts({

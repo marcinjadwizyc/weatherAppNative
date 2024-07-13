@@ -1,4 +1,4 @@
-import { Colors } from '@utils';
+import { Colors } from '@styles';
 import { TextInput, View } from 'react-native';
 
 import { Button } from '../Button';

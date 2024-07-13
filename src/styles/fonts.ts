@@ -1,5 +1,3 @@
-import { Colors } from './colors';
-
 export enum Fonts {
 	OUTFIT_REGULAR = 'Outfit_400Regular',
 	OUTFIT_BOLD = 'Outfit_800ExtraBold',
@@ -7,12 +5,10 @@ export enum Fonts {
 
 const regularBaseFont = {
 	fontFamily: Fonts.OUTFIT_REGULAR,
-	color: Colors.WHITE,
 };
 
 const boldBaseFont = {
 	fontFamily: Fonts.OUTFIT_BOLD,
-	color: Colors.WHITE,
 };
 
 export const FontStyles = {
