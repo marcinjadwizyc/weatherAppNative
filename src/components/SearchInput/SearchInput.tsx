@@ -3,6 +3,7 @@ import { Colors, themeStyles } from '@styles';
 import { TextInput, View } from 'react-native';
 
 import { Button } from '../Button';
+import { IconButton } from '../IconButton';
 import { styles } from './SearchInput.styles';
 
 export interface SearchInputProps {
@@ -23,7 +24,10 @@ export const SearchInput = ({ value, onChangeText, onPress }: SearchInputProps) 
 				placeholder='Location...'
 				placeholderTextColor={theme === 'light' ? Colors.BLACK : Colors.WHITE}
 			/>
-			<Button onPress={onPress}>Search</Button>
+			<View style={styles.buttons}>
+				<IconButton name='magnifying-glass' variant='solid' onPress={onPress} />
+				<IconButton name='location-dot' variant='solid' onPress={onPress} />
+			</View>
 		</View>
 	);
 };
