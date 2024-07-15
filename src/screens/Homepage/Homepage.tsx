@@ -3,7 +3,8 @@ import { useAppContext, useThemeContext } from '@context';
 import { Screens } from '@navigator/screens';
 import { useNavigation } from '@react-navigation/native';
 import { themeStyles } from '@styles';
-import { ApiResponse, capitalize } from '@utils';
+import { capitalize, getWeatherDataByLocation, getWeatherDataByText } from '@utils';
+import * as Location from 'expo-location';
 import { Fragment } from 'react';
 import { Text, View } from 'react-native';
 
@@ -18,13 +19,21 @@ export const Homepage = () => {
 
 	const handleSeeMorePress = () => navigate(Screens.WEATHER_DETAILS);
 
-	const handleGetLocationData = async () => {
-		const url = `https://api.openweathermap.org/data/2.5/weather?q=${currentLocation}&appid=${process.env.EXPO_PUBLIC_API_KEY}&units=metric`;
-
-		const response = await fetch(url);
-		const data = (await response.json()) as ApiResponse;
+	const handleSearchByText = async () => {
+		const data = await getWeatherDataByText(currentLocation);
 
 		setLocationData(data);
+	};
+
+	const handleSearchByLocation = async () => {
+		const {
+			coords: { latitude, longitude },
+		} = await Location.getCurrentPositionAsync();
+
+		const data = await getWeatherDataByLocation(latitude, longitude);
+
+		setLocationData(data);
+		setCurrentLocation(data.name);
 	};
 
 	const getContent = () => {
@@ -50,7 +59,12 @@ export const Homepage = () => {
 
 	return (
 		<Container>
-			<SearchInput value={currentLocation} onChangeText={setCurrentLocation} onPress={handleGetLocationData} />
+			<SearchInput
+				value={currentLocation}
+				onChangeText={setCurrentLocation}
+				onSearchPress={handleSearchByText}
+				onLocationPress={handleSearchByLocation}
+			/>
 			<View style={styles.content}>{getContent()}</View>
 		</Container>
 	);

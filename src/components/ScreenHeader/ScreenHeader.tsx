@@ -3,7 +3,6 @@ import { Screens } from '@navigator/screens';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { View } from 'react-native';
 
-import { Button } from '../Button';
 import { IconButton } from '../IconButton';
 import { styles } from './ScreenHeader.styles';
 
