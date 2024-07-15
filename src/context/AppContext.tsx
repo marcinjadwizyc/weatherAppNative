@@ -1,13 +1,14 @@
-import { ApiResponse, getFromStorage, saveToStorage } from '@utils';
+import { getFromStorage, saveToStorage } from '@utils';
+import { CurrentResponse } from 'openweathermap-ts/dist/types';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 interface IAppContext {
 	favoriteLocation: string;
 	currentLocation: string;
-	locationData: ApiResponse | undefined;
+	locationData: CurrentResponse | undefined;
 	setFavoriteLocation: (value: string) => void;
 	setCurrentLocation: (value: string) => void;
-	setLocationData: (value: ApiResponse) => void;
+	setLocationData: (value: CurrentResponse) => void;
 }
 
 interface AppContextProviderProps {
@@ -28,7 +29,7 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 
 	const [favoriteLocation, setFavoriteLocation] = useState('');
 	const [currentLocation, setCurrentLocation] = useState('');
-	const [locationData, setLocationData] = useState<ApiResponse>();
+	const [locationData, setLocationData] = useState<CurrentResponse>();
 
 	const handleSaveToStorage = async () => {
 		const savedLocation = await getFromStorage(storageKey);

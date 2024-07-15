@@ -3,7 +3,7 @@ import { useAppContext, useThemeContext } from '@context';
 import { Screens } from '@navigator/screens';
 import { useNavigation } from '@react-navigation/native';
 import { themeStyles } from '@styles';
-import { capitalize, getWeatherDataByLocation, getWeatherDataByText } from '@utils';
+import { capitalize, getWeatherDataByCity, getWeatherDataByLocation } from '@utils';
 import * as Location from 'expo-location';
 import { Fragment } from 'react';
 import { Text, View } from 'react-native';
@@ -20,7 +20,7 @@ export const Homepage = () => {
 	const handleSeeMorePress = () => navigate(Screens.WEATHER_DETAILS);
 
 	const handleSearchByText = async () => {
-		const data = await getWeatherDataByText(currentLocation);
+		const data = await getWeatherDataByCity(currentLocation);
 
 		setLocationData(data);
 	};

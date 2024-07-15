@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
 	temp: {
 		...FontStyles.boldLarge,
 	},
-	extraInfoContainer: {
+	cardContainer: {
 		width: '100%',
 		flexDirection: 'row',
 		borderRadius: 24,
@@ -24,5 +24,20 @@ export const styles = StyleSheet.create({
 		paddingHorizontal: 24,
 		paddingVertical: 12,
 		marginBottom: 24,
+	},
+	forecastContainer: {
+		width: '100%',
+		alignItems: 'center',
+	},
+	forecastTitle: {
+		fontSize: 18,
+		marginBottom: 12,
+	},
+	forecastTempContainer: {
+		flex: 1,
+		justifyContent: 'space-between',
+	},
+	forecastTemp: {
+		fontSize: 18,
 	},
 });

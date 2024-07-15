@@ -6746,6 +6746,13 @@ open@^8.0.4, open@^8.3.0:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
+openweathermap-ts@^1.2.10:
+  version "1.2.10"
+  resolved "https://registry.yarnpkg.com/openweathermap-ts/-/openweathermap-ts-1.2.10.tgz#7ced3704a9a05931dc9671d85c3d0431a3887dfa"
+  integrity sha512-Zckv2aXN8ENSeAeroces2jJciLWb6aLNXEmvG6pmF+BcIMw2kwRo6++/AKUNoU5suOp47UWA6lllDV0TNm//OA==
+  dependencies:
+    node-fetch "^2.6.0"
+
 optionator@^0.9.3:
   version "0.9.4"
   resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.9.4.tgz#7ea1c1a5d91d764fb282139c88fe11e182a3a734"
