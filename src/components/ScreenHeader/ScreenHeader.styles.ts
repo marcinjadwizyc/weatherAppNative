@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
 		marginBottom: 8,
 		paddingHorizontal: 16,
 	},
-	themeToggle: {
+	icons: {
 		marginLeft: 'auto',
 	},
 });

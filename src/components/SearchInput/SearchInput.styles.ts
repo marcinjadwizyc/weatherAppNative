@@ -18,4 +18,9 @@ export const styles = StyleSheet.create({
 		borderRadius: 12,
 		...FontStyles.regularSmall,
 	},
+	buttons: {
+		flexDirection: 'row',
+		gap: 12,
+		alignItems: 'center',
+	},
 });

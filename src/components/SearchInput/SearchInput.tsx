@@ -2,16 +2,17 @@ import { useThemeContext } from '@context';
 import { Colors, themeStyles } from '@styles';
 import { TextInput, View } from 'react-native';
 
-import { Button } from '../Button';
+import { IconButton } from '../IconButton';
 import { styles } from './SearchInput.styles';
 
 export interface SearchInputProps {
 	value: string;
 	onChangeText: (value: string) => void;
-	onPress: () => void;
+	onSearchPress: () => void;
+	onLocationPress: () => void;
 }
 
-export const SearchInput = ({ value, onChangeText, onPress }: SearchInputProps) => {
+export const SearchInput = ({ value, onChangeText, onSearchPress, onLocationPress }: SearchInputProps) => {
 	const { theme } = useThemeContext();
 
 	return (
@@ -23,7 +24,10 @@ export const SearchInput = ({ value, onChangeText, onPress }: SearchInputProps) 
 				placeholder='Location...'
 				placeholderTextColor={theme === 'light' ? Colors.BLACK : Colors.WHITE}
 			/>
-			<Button onPress={onPress}>Search</Button>
+			<View style={styles.buttons}>
+				<IconButton name='magnifying-glass' variant='solid' onPress={onSearchPress} />
+				<IconButton name='location-dot' variant='solid' onPress={onLocationPress} />
+			</View>
 		</View>
 	);
 };
