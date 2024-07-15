@@ -1,22 +1,31 @@
-import { ApiResponse } from './types';
+import OpenWeatherMap from 'openweathermap-ts';
 
-const mainUrl = `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.EXPO_PUBLIC_API_KEY}&units=metric`;
+const api = new OpenWeatherMap({
+	apiKey: process.env.EXPO_PUBLIC_API_KEY as string,
+	units: 'metric',
+});
 
-const getWeatherData = async (url: string) => {
-	const response = await fetch(url);
-	const data = (await response.json()) as ApiResponse;
-
-	return data;
-};
-
-export const getWeatherDataByText = (location: string) => {
-	const url = mainUrl + `&q=${location}`;
-
-	return getWeatherData(url);
+export const getWeatherDataByCity = (location: string) => {
+	return api.getCurrentWeatherByCityName({
+		cityName: location,
+	});
 };
 
 export const getWeatherDataByLocation = (lat: number, lon: number) => {
-	const url = mainUrl + `&lat=${lat}&lon=${lon}`;
+	return api.getCurrentWeatherByGeoCoordinates(lat, lon);
+};
 
-	return getWeatherData(url);
+export const getWeatherForecastByCity = async (location: string) => {
+	const rawData = await api.getThreeHourForecastByCityName({
+		cityName: location,
+	});
+
+	const regex = /12:00:00/;
+
+	const filteredList = rawData.list.filter(el => el.dt_txt.match(regex));
+
+	return {
+		...rawData,
+		list: filteredList,
+	};
 };
