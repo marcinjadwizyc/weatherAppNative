@@ -1,4 +1,4 @@
-import { AppContextProvider, ThemeContextProvider } from '@context';
+import { AppContextProvider } from '@context';
 import { Outfit_400Regular, Outfit_800ExtraBold, useFonts } from '@expo-google-fonts/outfit';
 import { StackNavigator } from '@navigator/navigator';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,12 +13,10 @@ const App = () => {
 		Outfit_800ExtraBold,
 	});
 
-	useEffect(() => {
-		const getLocationPermissions = async () => {
-			await Location.requestForegroundPermissionsAsync();
-		};
+	const handleGetLocationPermissions = async () => await Location.requestForegroundPermissionsAsync();
 
-		getLocationPermissions();
+	useEffect(() => {
+		handleGetLocationPermissions();
 	}, []);
 
 	useEffect(() => {
@@ -33,13 +31,11 @@ const App = () => {
 
 	return (
 		<Fragment>
-			<ThemeContextProvider>
-				<AppContextProvider>
-					<NavigationContainer>
-						<StackNavigator />
-					</NavigationContainer>
-				</AppContextProvider>
-			</ThemeContextProvider>
+			<AppContextProvider>
+				<NavigationContainer>
+					<StackNavigator />
+				</NavigationContainer>
+			</AppContextProvider>
 		</Fragment>
 	);
 };

@@ -1,14 +1,18 @@
 import { getFromStorage, saveToStorage } from '@utils';
-import { CurrentResponse } from 'openweathermap-ts/dist/types';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react';
+
+type Theme = 'light' | 'dark';
+
+interface FavoriteLocation {
+	id: number;
+	name: string;
+}
 
 interface IAppContext {
-	favoriteLocation: string;
-	currentLocation: string;
-	locationData: CurrentResponse | undefined;
-	setFavoriteLocation: (value: string) => void;
-	setCurrentLocation: (value: string) => void;
-	setLocationData: (value: CurrentResponse) => void;
+	theme: Theme;
+	favoriteLocations: FavoriteLocation[];
+	toggleTheme: () => void;
+	setFavoriteLocations: Dispatch<SetStateAction<FavoriteLocation[]>>;
 }
 
 interface AppContextProviderProps {
@@ -16,55 +20,66 @@ interface AppContextProviderProps {
 }
 
 const AppContext = createContext<IAppContext>({
-	favoriteLocation: '',
-	currentLocation: '',
-	locationData: undefined,
-	setFavoriteLocation: () => {},
-	setCurrentLocation: () => {},
-	setLocationData: () => {},
+	theme: 'light',
+	favoriteLocations: [],
+	toggleTheme: () => {},
+	setFavoriteLocations: () => {},
 });
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
-	const storageKey = 'weatherAppNative';
+	const themeStorageKey = 'weatherAppNative_theme';
+	const favoritesStorageKey = 'weatherAppNative_favorites';
 
-	const [favoriteLocation, setFavoriteLocation] = useState('');
-	const [currentLocation, setCurrentLocation] = useState('');
-	const [locationData, setLocationData] = useState<CurrentResponse>();
+	const [theme, setTheme] = useState<Theme>('light');
+	const [favoriteLocations, setFavoriteLocations] = useState<FavoriteLocation[]>([]);
 
-	const handleSaveToStorage = async () => {
-		const savedLocation = await getFromStorage(storageKey);
+	const toggleTheme = () => setTheme(prevState => (prevState === 'light' ? 'dark' : 'light'));
 
-		if (favoriteLocation !== savedLocation) {
-			saveToStorage(storageKey, favoriteLocation);
-		}
+	const handleSaveThemeToStorage = async () => {
+		await saveToStorage(themeStorageKey, theme);
 	};
 
-	const handleLoadFromStorage = async () => {
-		const location = await getFromStorage(storageKey);
+	const handleLoadThemeFromStorage = async () => {
+		const theme = await getFromStorage(themeStorageKey);
 
-		if (location) {
-			setCurrentLocation(location);
-			setFavoriteLocation(location);
+		setTheme(theme as Theme);
+	};
+
+	const handleSaveFavoritesToStorage = async () => {
+		await saveToStorage(favoritesStorageKey, JSON.stringify(favoriteLocations));
+	};
+
+	const handleLoadFavoritesFromStorage = async () => {
+		const rawLocations = await getFromStorage(favoritesStorageKey);
+		const locations = await JSON.parse(rawLocations as string);
+
+		if (locations) {
+			setFavoriteLocations(locations);
 		}
 	};
 
 	useEffect(() => {
-		handleLoadFromStorage();
+		handleLoadFavoritesFromStorage();
+		handleLoadThemeFromStorage();
 	}, []);
 
 	useEffect(() => {
-		handleSaveToStorage();
-	}, [favoriteLocation]);
+		handleSaveFavoritesToStorage();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [favoriteLocations]);
+
+	useEffect(() => {
+		handleSaveThemeToStorage();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [theme]);
 
 	return (
 		<AppContext.Provider
 			value={{
-				favoriteLocation,
-				currentLocation,
-				locationData,
-				setFavoriteLocation,
-				setCurrentLocation,
-				setLocationData,
+				theme,
+				favoriteLocations,
+				toggleTheme,
+				setFavoriteLocations,
 			}}
 		>
 			{children}

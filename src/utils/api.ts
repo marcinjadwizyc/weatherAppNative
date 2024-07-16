@@ -5,14 +5,18 @@ const api = new OpenWeatherMap({
 	units: 'metric',
 });
 
-export const getWeatherDataByCity = (location: string) => {
-	return api.getCurrentWeatherByCityName({
+export const getWeatherDataByCity = async (location: string) => {
+	const data = await api.getCurrentWeatherByCityName({
 		cityName: location,
 	});
+
+	return data;
 };
 
-export const getWeatherDataByLocation = (lat: number, lon: number) => {
-	return api.getCurrentWeatherByGeoCoordinates(lat, lon);
+export const getWeatherDataByLocation = async (lat: number, lon: number) => {
+	const data = await api.getCurrentWeatherByGeoCoordinates(lat, lon);
+
+	return data;
 };
 
 export const getWeatherForecastByCity = async (location: string) => {
@@ -21,8 +25,7 @@ export const getWeatherForecastByCity = async (location: string) => {
 	});
 
 	const regex = /12:00:00/;
-
-	const filteredList = rawData.list.filter(el => el.dt_txt.match(regex));
+	const filteredList = rawData.list.filter(el => el.dt_txt.match(regex)); // Return only one timestamp for each day
 
 	return {
 		...rawData,

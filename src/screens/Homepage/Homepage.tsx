@@ -1,28 +1,35 @@
 import { Button, Container, SearchInput } from '@components';
-import { useAppContext, useThemeContext } from '@context';
+import { useAppContext } from '@context';
 import { Screens } from '@navigator/screens';
 import { useNavigation } from '@react-navigation/native';
 import { themeStyles } from '@styles';
-import { capitalize, getWeatherDataByCity, getWeatherDataByLocation } from '@utils';
+import { asCelcius, capitalize, getWeatherDataByCity, getWeatherDataByLocation } from '@utils';
 import * as Location from 'expo-location';
-import { Fragment } from 'react';
+import { CurrentResponse } from 'openweathermap-ts/dist/types';
+import { Fragment, useState } from 'react';
 import { Text, View } from 'react-native';
 
 import { styles } from './Homepage.styles';
 
 export const Homepage = () => {
-	const { currentLocation, setCurrentLocation, locationData, setLocationData } = useAppContext();
+	const { theme } = useAppContext();
 	const { navigate } = useNavigation();
-	const { theme } = useThemeContext();
-
 	const fontClass = themeStyles[`font_${theme}`];
 
-	const handleSeeMorePress = () => navigate(Screens.WEATHER_DETAILS);
+	const [currentLocation, setCurrentLocation] = useState('');
+	const [currentLocationData, setcurrentLocationData] = useState<CurrentResponse | undefined>();
+
+	const handleNavigateToDetails = () => {
+		if (currentLocationData) {
+			navigate(Screens.WEATHER_DETAILS, { name: currentLocationData.name });
+		}
+	};
 
 	const handleSearchByText = async () => {
 		const data = await getWeatherDataByCity(currentLocation);
 
-		setLocationData(data);
+		setCurrentLocation(data.name);
+		setcurrentLocationData(data);
 	};
 
 	const handleSearchByLocation = async () => {
@@ -32,29 +39,29 @@ export const Homepage = () => {
 
 		const data = await getWeatherDataByLocation(latitude, longitude);
 
-		setLocationData(data);
 		setCurrentLocation(data.name);
+		setcurrentLocationData(data);
 	};
 
 	const getContent = () => {
-		if (!locationData) {
+		if (!currentLocationData) {
 			return <Text style={[styles.info, fontClass]}>Search location to see the weather data</Text>;
 		}
 
-		if (locationData.cod !== 200) {
+		if (currentLocationData.cod !== 200) {
 			return <Text style={[styles.info, fontClass]}>Couldn't find the location, please try again</Text>;
-		} else {
-			return (
-				<Fragment>
-					<Text style={[styles.city, fontClass]}>{locationData.name}</Text>
-					<Text style={[styles.temp, fontClass]}>{locationData.main.temp.toFixed()}&deg;C</Text>
-					<Text style={[styles.description, fontClass]}>
-						{capitalize(locationData.weather[0].description)}
-					</Text>
-					<Button onPress={handleSeeMorePress}>See More</Button>
-				</Fragment>
-			);
 		}
+
+		return (
+			<Fragment>
+				<Text style={[styles.city, fontClass]}>{currentLocationData.name}</Text>
+				<Text style={[styles.temp, fontClass]}>{asCelcius(currentLocationData.main.temp)}</Text>
+				<Text style={[styles.description, fontClass]}>
+					{capitalize(currentLocationData.weather[0].description)}
+				</Text>
+				<Button onPress={handleNavigateToDetails}>See More</Button>
+			</Fragment>
+		);
 	};
 
 	return (

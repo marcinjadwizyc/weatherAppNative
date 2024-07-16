@@ -30,14 +30,20 @@ export const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	forecastTitle: {
-		fontSize: 18,
 		marginBottom: 12,
+		...FontStyles.boldSmall,
 	},
 	forecastTempContainer: {
 		flex: 1,
 		justifyContent: 'space-between',
 	},
+	forecastContent: {
+		alignItems: 'center',
+	},
+	forecastDate: {
+		...FontStyles.regularSmall,
+	},
 	forecastTemp: {
-		fontSize: 18,
+		...FontStyles.regularSmall,
 	},
 });

@@ -14,13 +14,12 @@ export const styles = StyleSheet.create({
 		paddingHorizontal: 12,
 		borderWidth: 1,
 		borderStyle: 'solid',
-		borderColor: Colors.WHITE,
 		borderRadius: 12,
 		...FontStyles.regularSmall,
 	},
 	buttons: {
 		flexDirection: 'row',
-		gap: 12,
 		alignItems: 'center',
+		gap: 12,
 	},
 });

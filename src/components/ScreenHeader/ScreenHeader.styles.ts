@@ -10,6 +10,8 @@ export const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 	},
 	icons: {
+		flexDirection: 'row',
 		marginLeft: 'auto',
+		gap: 12,
 	},
 });
