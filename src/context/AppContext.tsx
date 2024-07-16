@@ -3,10 +3,13 @@ import { CurrentResponse } from 'openweathermap-ts/dist/types';
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react';
 
 interface IAppContext {
-	favoriteLocations: string[];
+	favoriteLocations: {
+		location: string;
+		id: number;
+	}[];
 	currentLocation: string;
 	locationData: CurrentResponse | undefined;
-	setFavoriteLocations: Dispatch<SetStateAction<string[]>>;
+	setFavoriteLocations: Dispatch<SetStateAction<{ location: string; id: number }[]>>;
 	setCurrentLocation: Dispatch<SetStateAction<string>>;
 	setLocationData: Dispatch<SetStateAction<CurrentResponse | undefined>>;
 }
@@ -27,7 +30,7 @@ const AppContext = createContext<IAppContext>({
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 	const storageKey = 'weatherAppNative';
 
-	const [favoriteLocations, setFavoriteLocations] = useState<string[]>([]);
+	const [favoriteLocations, setFavoriteLocations] = useState<{ location: string; id: number }[]>([]);
 	const [currentLocation, setCurrentLocation] = useState('');
 	const [locationData, setLocationData] = useState<CurrentResponse>();
 

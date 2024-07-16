@@ -8,9 +8,10 @@ export const FavoriteLocations = () => {
 		<Container>
 			<FlatList
 				data={favoriteLocations}
+				keyExtractor={el => el.id.toString()}
 				renderItem={({ item }) => (
 					<View>
-						<Text>{item}</Text>
+						<Text>{item.location}</Text>
 					</View>
 				)}
 			/>

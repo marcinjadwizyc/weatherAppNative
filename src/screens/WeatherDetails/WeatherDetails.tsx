@@ -16,11 +16,17 @@ export const WeatherDetails = () => {
 
 	const fontClass = themeStyles[`font_${theme}`];
 
-	const isFavoriteLocation = favoriteLocations.includes(locationData?.name as string);
+	const isFavoriteLocation = favoriteLocations.some(el => el.id === locationData?.id);
 
 	const handleMakeFavoritePress = () => {
 		if (locationData) {
-			setFavoriteLocations(prevState => [...prevState, locationData.name]);
+			setFavoriteLocations(prevState => [
+				...prevState,
+				{
+					location: locationData.name,
+					id: locationData.id,
+				},
+			]);
 		}
 	};
 
