@@ -7,11 +7,12 @@ import { styles } from './IconButton.styles';
 
 interface IconButtonProps {
 	name: string;
+	label: string;
 	variant?: 'solid' | 'default';
 	onPress: () => void;
 }
 
-export const IconButton = ({ name, variant = 'default', onPress }: IconButtonProps) => {
+export const IconButton = ({ name, label, variant = 'default', onPress }: IconButtonProps) => {
 	const { theme } = useAppContext();
 
 	const getIconColor = () => {
@@ -23,7 +24,11 @@ export const IconButton = ({ name, variant = 'default', onPress }: IconButtonPro
 	};
 
 	return (
-		<TouchableOpacity style={[styles.button, styles[`button_${variant}`]]} onPress={onPress}>
+		<TouchableOpacity
+			style={[styles.button, styles[`button_${variant}`]]}
+			accessibilityLabel={label}
+			onPress={onPress}
+		>
 			<FontAwesome6 name={name} color={getIconColor()} size={variant === 'default' ? 32 : 24} />
 		</TouchableOpacity>
 	);

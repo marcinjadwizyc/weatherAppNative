@@ -1,40 +1,32 @@
-export enum Fonts {
+enum Fonts {
 	OUTFIT_REGULAR = 'Outfit_400Regular',
 	OUTFIT_BOLD = 'Outfit_800ExtraBold',
 }
 
-const regularBaseFont = {
-	fontFamily: Fonts.OUTFIT_REGULAR,
-};
-
-const boldBaseFont = {
-	fontFamily: Fonts.OUTFIT_BOLD,
-};
-
 export const FontStyles = {
 	regularSmall: {
+		fontFamily: Fonts.OUTFIT_REGULAR,
 		fontSize: 18,
 		lineHeight: 27,
-		...regularBaseFont,
 	},
 	regularMedium: {
+		fontFamily: Fonts.OUTFIT_REGULAR,
 		fontSize: 24,
 		lineHeight: 36,
-		...regularBaseFont,
 	},
 	regularLarge: {
+		fontFamily: Fonts.OUTFIT_REGULAR,
 		fontSize: 32,
 		lineHeight: 48,
-		...regularBaseFont,
 	},
 	boldSmall: {
+		fontFamily: Fonts.OUTFIT_BOLD,
 		fontSize: 24,
 		lineHeight: 36,
-		...boldBaseFont,
 	},
 	boldLarge: {
+		fontFamily: Fonts.OUTFIT_BOLD,
 		fontSize: 50,
 		lineHeight: 75,
-		...boldBaseFont,
 	},
 };

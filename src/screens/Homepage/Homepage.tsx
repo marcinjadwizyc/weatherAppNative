@@ -3,7 +3,7 @@ import { useAppContext } from '@context';
 import { Screens } from '@navigator/screens';
 import { useNavigation } from '@react-navigation/native';
 import { themeStyles } from '@styles';
-import { capitalize, getWeatherDataByCity, getWeatherDataByLocation } from '@utils';
+import { asCelcius, capitalize, getWeatherDataByCity, getWeatherDataByLocation } from '@utils';
 import * as Location from 'expo-location';
 import { CurrentResponse } from 'openweathermap-ts/dist/types';
 import { Fragment, useState } from 'react';
@@ -51,7 +51,7 @@ export const Homepage = () => {
 			return (
 				<Fragment>
 					<Text style={[styles.city, fontClass]}>{currentLocationData.name}</Text>
-					<Text style={[styles.temp, fontClass]}>{currentLocationData.main.temp.toFixed()}&deg;C</Text>
+					<Text style={[styles.temp, fontClass]}>{asCelcius(currentLocationData.main.temp)}</Text>
 					<Text style={[styles.description, fontClass]}>
 						{capitalize(currentLocationData.weather[0].description)}
 					</Text>

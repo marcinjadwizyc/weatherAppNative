@@ -14,4 +14,10 @@ export type StackParamList = {
 	[Screens.FAVORITE_LOCATIONS]: undefined;
 };
 
+declare global {
+	namespace ReactNavigation {
+		interface RootParamList extends StackParamList {}
+	}
+}
+
 export type WeatherDetailsRouteProp = RouteProp<StackParamList, Screens.WEATHER_DETAILS>;

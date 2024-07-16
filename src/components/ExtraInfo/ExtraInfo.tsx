@@ -12,10 +12,12 @@ interface ExtraInfoProps {
 export const ExtraInfo = ({ value, description }: ExtraInfoProps) => {
 	const { theme } = useAppContext();
 
+	const fontStyle = themeStyles[`font_${theme}`];
+
 	return (
 		<View style={styles.container}>
-			<Text style={[styles.value, themeStyles[`font_${theme}`]]}>{value}</Text>
-			<Text style={[styles.description, themeStyles[`font_${theme}`]]}>{description}</Text>
+			<Text style={[styles.value, fontStyle]}>{value}</Text>
+			<Text style={[styles.description, fontStyle]}>{description}</Text>
 		</View>
 	);
 };

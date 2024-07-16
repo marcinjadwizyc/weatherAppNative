@@ -3,7 +3,7 @@ import { useAppContext } from '@context';
 import { WeatherDetailsRouteProp } from '@navigator/screens';
 import { useRoute } from '@react-navigation/native';
 import { themeStyles } from '@styles';
-import { getWeatherDataByCity, getWeatherForecastByCity } from '@utils';
+import { asCelcius, getWeatherDataByCity, getWeatherForecastByCity } from '@utils';
 import { CurrentResponse, ThreeHourResponse } from 'openweathermap-ts/dist/types';
 import { Fragment, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
@@ -54,10 +54,10 @@ export const WeatherDetails = () => {
 				<View style={styles.container}>
 					<View>
 						<Text style={[styles.city, fontClass]}>{current.name}</Text>
-						<Text style={[styles.temp, fontClass]}>{current.main.temp.toFixed()}&deg;C</Text>
+						<Text style={[styles.temp, fontClass]}>{asCelcius(current.main.temp)}</Text>
 					</View>
 					<View style={[styles.cardContainer, themeStyles[`card_${theme}`]]}>
-						<ExtraInfo value={`${current.main.feels_like.toFixed()}\u00B0C`} description='Feels like' />
+						<ExtraInfo value={asCelcius(current.main.feels_like)} description='Feels like' />
 						<ExtraInfo value={`${current.main.humidity}%`} description='Humidity' />
 						<ExtraInfo value={`${current.main.pressure} hpa`} description='Pressure' />
 					</View>
@@ -72,9 +72,9 @@ export const WeatherDetails = () => {
 										data={forecast.list}
 										keyExtractor={el => el.dt.toString()}
 										renderItem={({ item }) => (
-											<Text
-												style={[styles.forecastTemp, themeStyles[`font_${theme}`]]}
-											>{`${item.main.temp.toFixed()}\u00B0C`}</Text>
+											<Text style={[styles.forecastTemp, themeStyles[`font_${theme}`]]}>
+												{asCelcius(item.main.temp)}
+											</Text>
 										)}
 										horizontal
 										contentContainerStyle={styles.forecastTempContainer}

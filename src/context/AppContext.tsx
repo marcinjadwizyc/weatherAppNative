@@ -3,16 +3,16 @@ import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffe
 
 type Theme = 'light' | 'dark';
 
-interface IFavoriteLocation {
+interface FavoriteLocation {
 	id: number;
 	name: string;
 }
 
 interface IAppContext {
-	favoriteLocations: IFavoriteLocation[];
 	theme: Theme;
-	setFavoriteLocations: Dispatch<SetStateAction<{ name: string; id: number }[]>>;
+	favoriteLocations: FavoriteLocation[];
 	toggleTheme: () => void;
+	setFavoriteLocations: Dispatch<SetStateAction<FavoriteLocation[]>>;
 }
 
 interface AppContextProviderProps {
@@ -20,21 +20,23 @@ interface AppContextProviderProps {
 }
 
 const AppContext = createContext<IAppContext>({
-	favoriteLocations: [],
 	theme: 'light',
-	setFavoriteLocations: () => {},
+	favoriteLocations: [],
 	toggleTheme: () => {},
+	setFavoriteLocations: () => {},
 });
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
-	const favoritesStorageKey = 'weatherAppNative_favorites';
 	const themeStorageKey = 'weatherAppNative_theme';
+	const favoritesStorageKey = 'weatherAppNative_favorites';
 
-	const [favoriteLocations, setFavoriteLocations] = useState<IFavoriteLocation[]>([]);
 	const [theme, setTheme] = useState<Theme>('light');
+	const [favoriteLocations, setFavoriteLocations] = useState<FavoriteLocation[]>([]);
+
+	const toggleTheme = () => setTheme(prevState => (prevState === 'light' ? 'dark' : 'light'));
 
 	const handleSaveThemeToStorage = async () => {
-		saveToStorage(themeStorageKey, theme);
+		await saveToStorage(themeStorageKey, theme);
 	};
 
 	const handleLoadThemeFromStorage = async () => {
@@ -44,10 +46,8 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 	};
 
 	const handleSaveFavoritesToStorage = async () => {
-		saveToStorage(favoritesStorageKey, JSON.stringify(favoriteLocations));
+		await saveToStorage(favoritesStorageKey, JSON.stringify(favoriteLocations));
 	};
-
-	const toggleTheme = () => setTheme(prevState => (prevState === 'light' ? 'dark' : 'light'));
 
 	const handleLoadFavoritesFromStorage = async () => {
 		const rawLocations = await getFromStorage(favoritesStorageKey);
@@ -65,10 +65,12 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 
 	useEffect(() => {
 		handleSaveFavoritesToStorage();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [favoriteLocations]);
 
 	useEffect(() => {
 		handleSaveThemeToStorage();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [theme]);
 
 	return (

@@ -3,12 +3,6 @@ import { FavoriteLocations, Homepage, WeatherDetails } from '@screens';
 
 import { Screens, StackParamList } from './screens';
 
-declare global {
-	namespace ReactNavigation {
-		interface RootParamList extends StackParamList {}
-	}
-}
-
 const Stack = createNativeStackNavigator<StackParamList>();
 
 export const StackNavigator = () => {

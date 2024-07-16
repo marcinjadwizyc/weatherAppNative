@@ -1,3 +1,7 @@
 export const capitalize = (text: string) => {
 	return text.charAt(0).toUpperCase() + text.slice(1);
 };
+
+export const asCelcius = (temp: number) => {
+	return `${temp.toFixed()}&deg;C`;
+};

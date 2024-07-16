@@ -13,12 +13,10 @@ const App = () => {
 		Outfit_800ExtraBold,
 	});
 
-	useEffect(() => {
-		const getLocationPermissions = async () => {
-			await Location.requestForegroundPermissionsAsync();
-		};
+	const handleGetLocationPermissions = async () => await Location.requestForegroundPermissionsAsync();
 
-		getLocationPermissions();
+	useEffect(() => {
+		handleGetLocationPermissions();
 	}, []);
 
 	useEffect(() => {
