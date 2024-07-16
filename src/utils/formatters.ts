@@ -3,5 +3,11 @@ export const capitalize = (text: string) => {
 };
 
 export const asCelcius = (temp: number) => {
-	return `${temp.toFixed()}&deg;C`;
+	return `${temp.toFixed()}°C`;
+};
+
+export const formatDate = (date: string) => {
+	const temp = date.split(' ')[0].split('-').reverse().join('.').slice(0, -5);
+
+	return temp;
 };

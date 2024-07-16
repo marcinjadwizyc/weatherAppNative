@@ -4,8 +4,8 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
 	content: {
 		flex: 1,
-		marginTop: 16,
 		alignItems: 'flex-start',
+		marginTop: 16,
 	},
 	city: {
 		...FontStyles.regularLarge,

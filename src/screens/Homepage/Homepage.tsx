@@ -12,21 +12,24 @@ import { Text, View } from 'react-native';
 import { styles } from './Homepage.styles';
 
 export const Homepage = () => {
-	const { navigate } = useNavigation();
 	const { theme } = useAppContext();
+	const { navigate } = useNavigation();
+	const fontClass = themeStyles[`font_${theme}`];
 
 	const [currentLocation, setCurrentLocation] = useState('');
 	const [currentLocationData, setcurrentLocationData] = useState<CurrentResponse | undefined>();
 
-	const fontClass = themeStyles[`font_${theme}`];
-
-	const handleSeeMorePress = () => navigate(Screens.WEATHER_DETAILS, { name: currentLocation });
+	const handleNavigateToDetails = () => {
+		if (currentLocationData) {
+			navigate(Screens.WEATHER_DETAILS, { name: currentLocationData.name });
+		}
+	};
 
 	const handleSearchByText = async () => {
 		const data = await getWeatherDataByCity(currentLocation);
 
-		setcurrentLocationData(data);
 		setCurrentLocation(data.name);
+		setcurrentLocationData(data);
 	};
 
 	const handleSearchByLocation = async () => {
@@ -36,8 +39,8 @@ export const Homepage = () => {
 
 		const data = await getWeatherDataByLocation(latitude, longitude);
 
-		setcurrentLocationData(data);
 		setCurrentLocation(data.name);
+		setcurrentLocationData(data);
 	};
 
 	const getContent = () => {
@@ -47,18 +50,18 @@ export const Homepage = () => {
 
 		if (currentLocationData.cod !== 200) {
 			return <Text style={[styles.info, fontClass]}>Couldn't find the location, please try again</Text>;
-		} else {
-			return (
-				<Fragment>
-					<Text style={[styles.city, fontClass]}>{currentLocationData.name}</Text>
-					<Text style={[styles.temp, fontClass]}>{asCelcius(currentLocationData.main.temp)}</Text>
-					<Text style={[styles.description, fontClass]}>
-						{capitalize(currentLocationData.weather[0].description)}
-					</Text>
-					<Button onPress={handleSeeMorePress}>See More</Button>
-				</Fragment>
-			);
 		}
+
+		return (
+			<Fragment>
+				<Text style={[styles.city, fontClass]}>{currentLocationData.name}</Text>
+				<Text style={[styles.temp, fontClass]}>{asCelcius(currentLocationData.main.temp)}</Text>
+				<Text style={[styles.description, fontClass]}>
+					{capitalize(currentLocationData.weather[0].description)}
+				</Text>
+				<Button onPress={handleNavigateToDetails}>See More</Button>
+			</Fragment>
+		);
 	};
 
 	return (
