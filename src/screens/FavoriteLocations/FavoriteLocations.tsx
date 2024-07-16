@@ -12,7 +12,6 @@ export const FavoriteLocations = () => {
 	const { navigate } = useNavigation();
 
 	const handleNavigateToDetails = (name: string) => {
-		console.log(name);
 		navigate(Screens.WEATHER_DETAILS, { name: name });
 	};
 

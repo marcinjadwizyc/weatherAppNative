@@ -9,7 +9,7 @@ describe('Button', () => {
 	it('should render the text', () => {
 		render(<Button onPress={mockOnPress}>{text}</Button>);
 
-		expect(screen.getByText(text)).toBeTruthy();
+		expect(screen.getByText(text)).toBeOnTheScreen();
 	});
 
 	it('should call an action on press', () => {

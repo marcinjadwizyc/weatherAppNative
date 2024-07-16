@@ -5,23 +5,21 @@ import { useNavigation } from '@react-navigation/native';
 import { themeStyles } from '@styles';
 import { asCelcius, capitalize, getWeatherDataByCity, getWeatherDataByLocation } from '@utils';
 import * as Location from 'expo-location';
-import { CurrentResponse } from 'openweathermap-ts/dist/types';
 import { Fragment, useState } from 'react';
 import { Text, View } from 'react-native';
 
 import { styles } from './Homepage.styles';
 
 export const Homepage = () => {
-	const { theme } = useAppContext();
+	const { currentWeatherData, setCurrentWeatherData, theme } = useAppContext();
 	const { navigate } = useNavigation();
 	const fontClass = themeStyles[`font_${theme}`];
 
 	const [currentLocation, setCurrentLocation] = useState('');
-	const [currentLocationData, setcurrentLocationData] = useState<CurrentResponse | undefined>();
 
 	const handleNavigateToDetails = () => {
-		if (currentLocationData) {
-			navigate(Screens.WEATHER_DETAILS, { name: currentLocationData.name });
+		if (currentWeatherData) {
+			navigate(Screens.WEATHER_DETAILS, { name: currentWeatherData.name });
 		}
 	};
 
@@ -29,7 +27,7 @@ export const Homepage = () => {
 		const data = await getWeatherDataByCity(currentLocation);
 
 		setCurrentLocation(data.name);
-		setcurrentLocationData(data);
+		setCurrentWeatherData(data);
 	};
 
 	const handleSearchByLocation = async () => {
@@ -40,24 +38,24 @@ export const Homepage = () => {
 		const data = await getWeatherDataByLocation(latitude, longitude);
 
 		setCurrentLocation(data.name);
-		setcurrentLocationData(data);
+		setCurrentWeatherData(data);
 	};
 
 	const getContent = () => {
-		if (!currentLocationData) {
+		if (!currentWeatherData) {
 			return <Text style={[styles.info, fontClass]}>Search location to see the weather data</Text>;
 		}
 
-		if (currentLocationData.cod !== 200) {
+		if (currentWeatherData.cod !== 200) {
 			return <Text style={[styles.info, fontClass]}>Couldn't find the location, please try again</Text>;
 		}
 
 		return (
 			<Fragment>
-				<Text style={[styles.city, fontClass]}>{currentLocationData.name}</Text>
-				<Text style={[styles.temp, fontClass]}>{asCelcius(currentLocationData.main.temp)}</Text>
+				<Text style={[styles.city, fontClass]}>{currentWeatherData.name}</Text>
+				<Text style={[styles.temp, fontClass]}>{asCelcius(currentWeatherData.main.temp)}</Text>
 				<Text style={[styles.description, fontClass]}>
-					{capitalize(currentLocationData.weather[0].description)}
+					{capitalize(currentWeatherData.weather[0].description)}
 				</Text>
 				<Button onPress={handleNavigateToDetails}>See More</Button>
 			</Fragment>

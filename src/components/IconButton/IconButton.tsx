@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native';
 
 import { styles } from './IconButton.styles';
 
-interface IconButtonProps {
+export interface IconButtonProps {
 	name: string;
 	label: string;
 	variant?: 'solid' | 'default';

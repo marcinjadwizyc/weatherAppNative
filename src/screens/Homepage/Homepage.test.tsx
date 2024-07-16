@@ -1,6 +1,7 @@
 import { useAppContext } from '@context';
 import { NavigationContainer } from '@react-navigation/native';
 import { render, screen } from '@testing-library/react-native';
+import { weatherDataMock } from '@utils';
 
 import { Homepage } from './Homepage';
 
@@ -8,10 +9,17 @@ jest.mock('../../context', () => ({
 	useAppContext: jest.fn(),
 }));
 
+jest.mock('@react-navigation/native', () => ({
+	...jest.requireActual('@react-navigation/native'),
+	useRoute: () => ({
+		name: '',
+	}),
+}));
+
 describe('Homepage', () => {
 	it('should render empty state', () => {
 		(useAppContext as jest.Mock).mockReturnValue({
-			currentLocation: '',
+			currentWeatherData: '',
 		});
 
 		render(
@@ -20,23 +28,12 @@ describe('Homepage', () => {
 			</NavigationContainer>,
 		);
 
-		expect(screen.getByText('Search location to see the weather data')).toBeTruthy();
+		expect(screen.getByText('Search location to see the weather data')).toBeOnTheScreen();
 	});
 
 	it('should render the weather data', async () => {
 		(useAppContext as jest.Mock).mockReturnValue({
-			locationData: {
-				cod: 200,
-				name: 'Poznań',
-				main: {
-					temp: 20,
-				},
-				weather: [
-					{
-						description: 'Cloudy',
-					},
-				],
-			},
+			currentWeatherData: weatherDataMock,
 		});
 
 		render(
@@ -45,13 +42,13 @@ describe('Homepage', () => {
 			</NavigationContainer>,
 		);
 
-		expect(screen.getByText('Poznań')).toBeTruthy();
-		expect(screen.getByText('See More')).toBeTruthy();
+		expect(screen.getByText(weatherDataMock.name)).toBeOnTheScreen();
+		expect(screen.getByText('See More')).toBeOnTheScreen();
 	});
 
 	it('should render error state', () => {
 		(useAppContext as jest.Mock).mockReturnValue({
-			locationData: {
+			currentWeatherData: {
 				cod: '404',
 			},
 		});
@@ -62,6 +59,6 @@ describe('Homepage', () => {
 			</NavigationContainer>,
 		);
 
-		expect(screen.getByText("Couldn't find the location, please try again")).toBeTruthy();
+		expect(screen.getByText("Couldn't find the location, please try again")).toBeOnTheScreen();
 	});
 });

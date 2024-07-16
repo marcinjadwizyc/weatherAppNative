@@ -4,20 +4,23 @@ import { WeatherDetailsRouteProp } from '@navigator/screens';
 import { useRoute } from '@react-navigation/native';
 import { themeStyles } from '@styles';
 import { asCelcius, formatDate, getWeatherDataByCity, getWeatherForecastByCity } from '@utils';
-import { CurrentResponse, ThreeHourResponse } from 'openweathermap-ts/dist/types';
-import { Fragment, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { Fragment, useEffect } from 'react';
+import { FlatList, Text, View } from 'react-native';
 
 import { styles } from './WeatherDetails.styles';
 
 export const WeatherDetails = () => {
-	const { favoriteLocations, setFavoriteLocations, theme } = useAppContext();
+	const {
+		currentWeatherData,
+		setCurrentWeatherData,
+		forecastWeatherData,
+		setForecastWeatherData,
+		favoriteLocations,
+		setFavoriteLocations,
+		theme,
+	} = useAppContext();
 	const { params } = useRoute<WeatherDetailsRouteProp>();
 	const fontClass = themeStyles[`font_${theme}`];
-
-	const [isLoading, setIsLoading] = useState(false);
-	const [currentWeatherData, setCurrentWeatherData] = useState<CurrentResponse | undefined>();
-	const [foreacstWeatherData, setForecastWeatherData] = useState<ThreeHourResponse | undefined>();
 
 	const isFavoriteLocation = favoriteLocations.some(el => el.id === currentWeatherData?.id);
 
@@ -34,31 +37,23 @@ export const WeatherDetails = () => {
 	};
 
 	const handleGetWeatherData = async () => {
-		setIsLoading(true);
-
 		const { name } = params;
 
-		const currentWeatherDataResponse = await getWeatherDataByCity(name);
-		const forecastWeatherDataResponse = await getWeatherForecastByCity(name);
+		if (name !== currentWeatherData?.name) {
+			const currentWeatherDataResponse = await getWeatherDataByCity(name);
+			setCurrentWeatherData(currentWeatherDataResponse);
+		}
 
-		setCurrentWeatherData(currentWeatherDataResponse);
-		setForecastWeatherData(forecastWeatherDataResponse);
-
-		setIsLoading(false);
+		if (name !== forecastWeatherData?.city.name) {
+			const forecastWeatherDataResponse = await getWeatherForecastByCity(name);
+			setForecastWeatherData(forecastWeatherDataResponse);
+		}
 	};
 
 	useEffect(() => {
 		handleGetWeatherData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params]);
-
-	if (isLoading) {
-		return (
-			<Container>
-				<ActivityIndicator size={48} />
-			</Container>
-		);
-	}
 
 	return (
 		<Container>
@@ -74,12 +69,12 @@ export const WeatherDetails = () => {
 						<ExtraInfo value={`${currentWeatherData.main.pressure} hpa`} description='Pressure' />
 					</View>
 					<View style={styles.forecastContainer}>
-						{foreacstWeatherData?.list ? (
+						{forecastWeatherData?.list ? (
 							<Fragment>
 								<Text style={[styles.forecastTitle, fontClass]}>Five Day Forecast:</Text>
 								<View style={[styles.cardContainer, themeStyles[`card_${theme}`]]}>
 									<FlatList
-										data={foreacstWeatherData.list}
+										data={forecastWeatherData.list}
 										keyExtractor={el => el.dt.toString()}
 										renderItem={({ item }) => (
 											<View style={styles.forecastContent}>

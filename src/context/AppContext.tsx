@@ -1,4 +1,5 @@
 import { getFromStorage, saveToStorage } from '@utils';
+import { CurrentResponse, ThreeHourResponse } from 'openweathermap-ts/dist/types';
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark';
@@ -10,8 +11,12 @@ interface FavoriteLocation {
 
 interface IAppContext {
 	theme: Theme;
+	currentWeatherData: CurrentResponse | undefined;
+	forecastWeatherData: ThreeHourResponse | undefined;
 	favoriteLocations: FavoriteLocation[];
 	toggleTheme: () => void;
+	setCurrentWeatherData: Dispatch<SetStateAction<CurrentResponse | undefined>>;
+	setForecastWeatherData: Dispatch<SetStateAction<ThreeHourResponse | undefined>>;
 	setFavoriteLocations: Dispatch<SetStateAction<FavoriteLocation[]>>;
 }
 
@@ -21,8 +26,12 @@ interface AppContextProviderProps {
 
 const AppContext = createContext<IAppContext>({
 	theme: 'light',
+	currentWeatherData: undefined,
+	forecastWeatherData: undefined,
 	favoriteLocations: [],
 	toggleTheme: () => {},
+	setCurrentWeatherData: () => {},
+	setForecastWeatherData: () => {},
 	setFavoriteLocations: () => {},
 });
 
@@ -31,6 +40,8 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 	const favoritesStorageKey = 'weatherAppNative_favorites';
 
 	const [theme, setTheme] = useState<Theme>('light');
+	const [currentWeatherData, setCurrentWeatherData] = useState<CurrentResponse | undefined>();
+	const [forecastWeatherData, setForecastWeatherData] = useState<ThreeHourResponse | undefined>();
 	const [favoriteLocations, setFavoriteLocations] = useState<FavoriteLocation[]>([]);
 
 	const toggleTheme = () => setTheme(prevState => (prevState === 'light' ? 'dark' : 'light'));
@@ -77,8 +88,12 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 		<AppContext.Provider
 			value={{
 				theme,
+				currentWeatherData,
+				forecastWeatherData,
 				favoriteLocations,
 				toggleTheme,
+				setCurrentWeatherData,
+				setForecastWeatherData,
 				setFavoriteLocations,
 			}}
 		>
