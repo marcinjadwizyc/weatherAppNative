@@ -1,4 +1,4 @@
-import { useThemeContext } from '@context';
+import { useAppContext } from '@context';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { Colors } from '@styles';
 import { TouchableOpacity } from 'react-native';
@@ -12,7 +12,7 @@ interface IconButtonProps {
 }
 
 export const IconButton = ({ name, variant = 'default', onPress }: IconButtonProps) => {
-	const { theme } = useThemeContext();
+	const { theme } = useAppContext();
 
 	const getIconColor = () => {
 		if (variant === 'solid') {

@@ -1,4 +1,4 @@
-import { useThemeContext } from '@context';
+import { useAppContext } from '@context';
 import { Colors, themeStyles } from '@styles';
 import { TextInput, View } from 'react-native';
 
@@ -13,7 +13,7 @@ export interface SearchInputProps {
 }
 
 export const SearchInput = ({ value, onChangeText, onSearchPress, onLocationPress }: SearchInputProps) => {
-	const { theme } = useThemeContext();
+	const { theme } = useAppContext();
 
 	return (
 		<View style={styles.container}>

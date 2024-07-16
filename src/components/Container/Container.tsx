@@ -1,4 +1,4 @@
-import { useThemeContext } from '@context';
+import { useAppContext } from '@context';
 import { themeStyles } from '@styles';
 import { StatusBar } from 'expo-status-bar';
 import { Fragment, ReactNode } from 'react';
@@ -12,7 +12,7 @@ interface ContainerProps {
 }
 
 export const Container = ({ children }: ContainerProps) => {
-	const { theme } = useThemeContext();
+	const { theme } = useAppContext();
 
 	return (
 		<Fragment>

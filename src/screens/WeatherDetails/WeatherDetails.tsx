@@ -1,5 +1,5 @@
 import { Button, Container, ExtraInfo } from '@components';
-import { useAppContext, useThemeContext } from '@context';
+import { useAppContext } from '@context';
 import { WeatherDetailsRouteProp } from '@navigator/screens';
 import { useRoute } from '@react-navigation/native';
 import { themeStyles } from '@styles';
@@ -12,7 +12,7 @@ import { styles } from './WeatherDetails.styles';
 
 export const WeatherDetails = () => {
 	const { favoriteLocations, setFavoriteLocations } = useAppContext();
-	const { theme } = useThemeContext();
+	const { theme } = useAppContext();
 	const { params } = useRoute<WeatherDetailsRouteProp>();
 
 	const [current, setCurrent] = useState<CurrentResponse | undefined>();
@@ -27,18 +27,18 @@ export const WeatherDetails = () => {
 			setFavoriteLocations(prevState => [
 				...prevState,
 				{
-					location: current.name,
 					id: current.id,
+					name: current.name,
 				},
 			]);
 		}
 	};
 
 	const handleGetcurrent = async () => {
-		const { location } = params;
+		const { name } = params;
 
-		const currentData = await getWeatherDataByCity(location);
-		const forecastData = await getWeatherForecastByCity(location);
+		const currentData = await getWeatherDataByCity(name);
+		const forecastData = await getWeatherForecastByCity(name);
 
 		setCurrent(currentData);
 		setForecast(forecastData);

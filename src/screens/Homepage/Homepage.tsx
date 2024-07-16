@@ -1,5 +1,5 @@
 import { Button, Container, SearchInput } from '@components';
-import { useAppContext, useThemeContext } from '@context';
+import { useAppContext } from '@context';
 import { Screens } from '@navigator/screens';
 import { useNavigation } from '@react-navigation/native';
 import { themeStyles } from '@styles';
@@ -13,14 +13,14 @@ import { styles } from './Homepage.styles';
 
 export const Homepage = () => {
 	const { navigate } = useNavigation();
-	const { theme } = useThemeContext();
+	const { theme } = useAppContext();
 
 	const [currentLocation, setCurrentLocation] = useState('');
 	const [currentLocationData, setcurrentLocationData] = useState<CurrentResponse | undefined>();
 
 	const fontClass = themeStyles[`font_${theme}`];
 
-	const handleSeeMorePress = () => navigate(Screens.WEATHER_DETAILS, { location: currentLocation });
+	const handleSeeMorePress = () => navigate(Screens.WEATHER_DETAILS, { name: currentLocation });
 
 	const handleSearchByText = async () => {
 		const data = await getWeatherDataByCity(currentLocation);

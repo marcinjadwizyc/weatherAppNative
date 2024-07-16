@@ -1,4 +1,4 @@
-import { useThemeContext } from '@context';
+import { useAppContext } from '@context';
 import { themeStyles } from '@styles';
 import { Text, View } from 'react-native';
 
@@ -10,7 +10,7 @@ interface ExtraInfoProps {
 }
 
 export const ExtraInfo = ({ value, description }: ExtraInfoProps) => {
-	const { theme } = useThemeContext();
+	const { theme } = useAppContext();
 
 	return (
 		<View style={styles.container}>

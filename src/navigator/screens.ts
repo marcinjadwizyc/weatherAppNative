@@ -9,7 +9,7 @@ export enum Screens {
 export type StackParamList = {
 	[Screens.HOMEPAGE]: undefined;
 	[Screens.WEATHER_DETAILS]: {
-		location: string;
+		name: string;
 	};
 	[Screens.FAVORITE_LOCATIONS]: undefined;
 };
