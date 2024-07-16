@@ -1,60 +1,65 @@
 import { Button, Container, ExtraInfo } from '@components';
 import { useAppContext, useThemeContext } from '@context';
+import { WeatherDetailsRouteProp } from '@navigator/screens';
+import { useRoute } from '@react-navigation/native';
 import { themeStyles } from '@styles';
-import { getWeatherForecastByCity } from '@utils';
-import { ThreeHourResponse } from 'openweathermap-ts/dist/types';
+import { getWeatherDataByCity, getWeatherForecastByCity } from '@utils';
+import { CurrentResponse, ThreeHourResponse } from 'openweathermap-ts/dist/types';
 import { Fragment, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 
 import { styles } from './WeatherDetails.styles';
 
 export const WeatherDetails = () => {
-	const { currentLocation, favoriteLocations, setFavoriteLocations, locationData } = useAppContext();
+	const { favoriteLocations, setFavoriteLocations } = useAppContext();
 	const { theme } = useThemeContext();
+	const { params } = useRoute<WeatherDetailsRouteProp>();
 
+	const [current, setCurrent] = useState<CurrentResponse | undefined>();
 	const [forecast, setForecast] = useState<ThreeHourResponse | undefined>();
 
 	const fontClass = themeStyles[`font_${theme}`];
 
-	const isFavoriteLocation = favoriteLocations.some(el => el.id === locationData?.id);
+	const isFavoriteLocation = favoriteLocations.some(el => el.id === current?.id);
 
 	const handleMakeFavoritePress = () => {
-		if (locationData) {
+		if (current) {
 			setFavoriteLocations(prevState => [
 				...prevState,
 				{
-					location: locationData.name,
-					id: locationData.id,
+					location: current.name,
+					id: current.id,
 				},
 			]);
 		}
 	};
 
-	const handleGetWeatherForecast = async () => {
-		const data = await getWeatherForecastByCity(currentLocation);
+	const handleGetcurrent = async () => {
+		const { location } = params;
 
-		setForecast(data);
+		const currentData = await getWeatherDataByCity(location);
+		const forecastData = await getWeatherForecastByCity(location);
+
+		setCurrent(currentData);
+		setForecast(forecastData);
 	};
 
 	useEffect(() => {
-		handleGetWeatherForecast();
+		handleGetcurrent();
 	}, []);
 
 	return (
 		<Container>
-			{locationData && (
+			{current && (
 				<View style={styles.container}>
 					<View>
-						<Text style={[styles.city, fontClass]}>{locationData.name}</Text>
-						<Text style={[styles.temp, fontClass]}>{locationData.main.temp.toFixed()}&deg;C</Text>
+						<Text style={[styles.city, fontClass]}>{current.name}</Text>
+						<Text style={[styles.temp, fontClass]}>{current.main.temp.toFixed()}&deg;C</Text>
 					</View>
 					<View style={[styles.cardContainer, themeStyles[`card_${theme}`]]}>
-						<ExtraInfo
-							value={`${locationData.main.feels_like.toFixed()}\u00B0C`}
-							description='Feels like'
-						/>
-						<ExtraInfo value={`${locationData.main.humidity}%`} description='Humidity' />
-						<ExtraInfo value={`${locationData.main.pressure} hpa`} description='Pressure' />
+						<ExtraInfo value={`${current.main.feels_like.toFixed()}\u00B0C`} description='Feels like' />
+						<ExtraInfo value={`${current.main.humidity}%`} description='Humidity' />
+						<ExtraInfo value={`${current.main.pressure} hpa`} description='Pressure' />
 					</View>
 					<View style={styles.forecastContainer}>
 						{forecast?.list ? (
