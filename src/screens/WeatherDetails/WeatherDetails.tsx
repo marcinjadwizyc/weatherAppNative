@@ -9,18 +9,18 @@ import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 import { styles } from './WeatherDetails.styles';
 
 export const WeatherDetails = () => {
-	const { currentLocation, favoriteLocation, setFavoriteLocation, locationData } = useAppContext();
+	const { currentLocation, favoriteLocations, setFavoriteLocations, locationData } = useAppContext();
 	const { theme } = useThemeContext();
 
 	const [forecast, setForecast] = useState<ThreeHourResponse | undefined>();
 
 	const fontClass = themeStyles[`font_${theme}`];
 
-	const isFavoriteLocation = favoriteLocation === locationData?.name;
+	const isFavoriteLocation = favoriteLocations.includes(locationData?.name as string);
 
 	const handleMakeFavoritePress = () => {
 		if (locationData) {
-			setFavoriteLocation(locationData.name);
+			setFavoriteLocations(prevState => [...prevState, locationData.name]);
 		}
 	};
 

@@ -1,14 +1,14 @@
 import { getFromStorage, saveToStorage } from '@utils';
 import { CurrentResponse } from 'openweathermap-ts/dist/types';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react';
 
 interface IAppContext {
-	favoriteLocation: string;
+	favoriteLocations: string[];
 	currentLocation: string;
 	locationData: CurrentResponse | undefined;
-	setFavoriteLocation: (value: string) => void;
-	setCurrentLocation: (value: string) => void;
-	setLocationData: (value: CurrentResponse) => void;
+	setFavoriteLocations: Dispatch<SetStateAction<string[]>>;
+	setCurrentLocation: Dispatch<SetStateAction<string>>;
+	setLocationData: Dispatch<SetStateAction<CurrentResponse | undefined>>;
 }
 
 interface AppContextProviderProps {
@@ -16,10 +16,10 @@ interface AppContextProviderProps {
 }
 
 const AppContext = createContext<IAppContext>({
-	favoriteLocation: '',
+	favoriteLocations: [],
 	currentLocation: '',
 	locationData: undefined,
-	setFavoriteLocation: () => {},
+	setFavoriteLocations: () => {},
 	setCurrentLocation: () => {},
 	setLocationData: () => {},
 });
@@ -27,24 +27,20 @@ const AppContext = createContext<IAppContext>({
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 	const storageKey = 'weatherAppNative';
 
-	const [favoriteLocation, setFavoriteLocation] = useState('');
+	const [favoriteLocations, setFavoriteLocations] = useState<string[]>([]);
 	const [currentLocation, setCurrentLocation] = useState('');
 	const [locationData, setLocationData] = useState<CurrentResponse>();
 
 	const handleSaveToStorage = async () => {
-		const savedLocation = await getFromStorage(storageKey);
-
-		if (favoriteLocation !== savedLocation) {
-			saveToStorage(storageKey, favoriteLocation);
-		}
+		saveToStorage(storageKey, JSON.stringify(favoriteLocations));
 	};
 
 	const handleLoadFromStorage = async () => {
-		const location = await getFromStorage(storageKey);
+		const rawLocations = await getFromStorage(storageKey);
+		const locations = await JSON.parse(rawLocations as string);
 
-		if (location) {
-			setCurrentLocation(location);
-			setFavoriteLocation(location);
+		if (locations) {
+			setFavoriteLocations(locations);
 		}
 	};
 
@@ -54,15 +50,15 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 
 	useEffect(() => {
 		handleSaveToStorage();
-	}, [favoriteLocation]);
+	}, [favoriteLocations]);
 
 	return (
 		<AppContext.Provider
 			value={{
-				favoriteLocation,
+				favoriteLocations,
 				currentLocation,
 				locationData,
-				setFavoriteLocation,
+				setFavoriteLocations,
 				setCurrentLocation,
 				setLocationData,
 			}}

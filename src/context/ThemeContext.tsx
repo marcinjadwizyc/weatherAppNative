@@ -1,11 +1,11 @@
 import { getFromStorage, saveToStorage } from '@utils';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark';
 
 interface IThemeContext {
 	theme: Theme;
-	toggleTheme: () => void;
+	toggleTheme: Dispatch<SetStateAction<Theme>>;
 }
 
 interface ThemeContextProviderProps {
