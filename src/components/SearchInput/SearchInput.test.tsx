@@ -5,14 +5,15 @@ import { SearchInput, SearchInputProps } from './SearchInput';
 const mockProps: SearchInputProps = {
 	value: 'Value',
 	onChangeText: jest.fn(),
-	onPress: jest.fn(),
+	onSearchPress: jest.fn(),
+	onLocationPress: jest.fn(),
 };
 
 describe('SearchInput', () => {
 	it('should render the value', () => {
 		render(<SearchInput {...mockProps} />);
 
-		expect(screen.getByDisplayValue(mockProps.value)).toBeTruthy();
+		expect(screen.getByDisplayValue(mockProps.value)).toBeOnTheScreen();
 	});
 
 	it('should update the value', () => {
@@ -23,11 +24,19 @@ describe('SearchInput', () => {
 		expect(mockProps.onChangeText).toHaveBeenCalledWith('New Value');
 	});
 
-	it('should call an action on button press', () => {
+	it('should call an search by text on button press', () => {
 		render(<SearchInput {...mockProps} />);
 
-		fireEvent.press(screen.getByText('Search'));
+		fireEvent.press(screen.getByLabelText('Search by Text'));
 
-		expect(mockProps.onPress).toHaveBeenCalled();
+		expect(mockProps.onSearchPress).toHaveBeenCalled();
+	});
+
+	it('should call an search by location on button press', () => {
+		render(<SearchInput {...mockProps} />);
+
+		fireEvent.press(screen.getByLabelText('Search by Location'));
+
+		expect(mockProps.onLocationPress).toHaveBeenCalled();
 	});
 });

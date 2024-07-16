@@ -6,7 +6,7 @@ import { themeStyles } from '@styles';
 import { asCelcius, formatDate, getWeatherDataByCity, getWeatherForecastByCity } from '@utils';
 import { CurrentResponse, ThreeHourResponse } from 'openweathermap-ts/dist/types';
 import { Fragment, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 
 import { styles } from './WeatherDetails.styles';
 
@@ -15,7 +15,6 @@ export const WeatherDetails = () => {
 	const { params } = useRoute<WeatherDetailsRouteProp>();
 	const fontClass = themeStyles[`font_${theme}`];
 
-	const [isLoading, setIsLoading] = useState(false);
 	const [currentWeatherData, setCurrentWeatherData] = useState<CurrentResponse | undefined>();
 	const [foreacstWeatherData, setForecastWeatherData] = useState<ThreeHourResponse | undefined>();
 
@@ -34,8 +33,6 @@ export const WeatherDetails = () => {
 	};
 
 	const handleGetWeatherData = async () => {
-		setIsLoading(true);
-
 		const { name } = params;
 
 		const currentWeatherDataResponse = await getWeatherDataByCity(name);
@@ -43,22 +40,12 @@ export const WeatherDetails = () => {
 
 		setCurrentWeatherData(currentWeatherDataResponse);
 		setForecastWeatherData(forecastWeatherDataResponse);
-
-		setIsLoading(false);
 	};
 
 	useEffect(() => {
 		handleGetWeatherData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params]);
-
-	if (isLoading) {
-		return (
-			<Container>
-				<ActivityIndicator size={48} />
-			</Container>
-		);
-	}
 
 	return (
 		<Container>
