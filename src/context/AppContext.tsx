@@ -53,7 +53,9 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 	const handleLoadThemeFromStorage = async () => {
 		const theme = await getFromStorage(themeStorageKey);
 
-		setTheme(theme as Theme);
+		if (theme === 'light' || theme === 'dark') {
+			setTheme(theme);
+		}
 	};
 
 	const handleSaveFavoritesToStorage = async () => {
